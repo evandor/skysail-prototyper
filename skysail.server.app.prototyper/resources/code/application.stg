@@ -1,0 +1,72 @@
+application(application,routercode) ::= <<
+package $application.packageName$;
+
+import java.util.*;
+
+import org.osgi.service.component.annotations.*;
+import org.osgi.service.event.EventAdmin;
+
+import io.skysail.server.app.*;
+import de.twenty11.skysail.server.core.restlet.*;
+import io.skysail.domain.Identifiable;
+import io.skysail.domain.core.Repositories;
+import io.skysail.server.app.*;
+import io.skysail.server.menus.MenuItemProvider;
+
+import $application.packageName$.*;
+
+$entitiesPackages(application)$
+
+/**
+ * generated from application.stg
+ */
+public class $application.name$ApplicationGen extends SkysailApplication implements ApplicationProvider, MenuItemProvider {
+
+    public static final String LIST_ID = "lid";
+    public static final String TODO_ID = "id";
+    public static final String APP_NAME = "$application.name$";
+
+    @Reference(cardinality = ReferenceCardinality.OPTIONAL)
+    private volatile EventAdmin eventAdmin;
+
+    public $application.name$ApplicationGen(String name, ApiVersion apiVersion, List<Class<? extends Identifiable\>>  entityClasses) {
+        super(name, apiVersion, entityClasses);
+    }
+    
+    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY)
+    public void setRepositories(Repositories repos) {
+        super.setRepositories(repos);
+    }
+
+    public void unsetRepositories(Repositories repo) {
+        super.setRepositories(null);
+    }
+
+    $repositories(application.entityModels)$
+
+    @Override
+    protected void attach() {
+        super.attach();
+$routercode$
+    }
+    
+    public EventAdmin getEventAdmin() {
+        return eventAdmin;
+    }
+
+}
+>>
+
+entityClasses(modelSet) ::= <<
+    $modelSet: {key | $key.id$.class};separator=", "$
+>>
+
+repositories(modelSet) ::= <<
+$modelSet: {key | 
+public $application.name$Repository get$key.simpleName$Repository() {
+    return ($application.name$Repository) getRepository($key.id$.class);
+\}    
+}$
+
+
+>>

@@ -1,59 +1,56 @@
-########################
-## BND BUILD SETTINGS ##
-########################
+javac.source:          1.8
+javac.target:          1.8
+
+-baseline: *
+
+copyright:              Copyright (c) twentyeleven.de (2011, ${tstamp;yyyy}). All Rights Reserved.
+copyright.html:         Copyright &copy; twentyeleven.de (2011, ${tstamp;yyyy}). All Rights Reserved.
+
+skysail.domain.version                             '[0.1.0,0.1.1)'
+
+skysail.api.version                                '[0.1.0,0.1.1)'
+skysail.api.search.version                         '[0.1.0,0.1.1)'
+
+# wip
+skysail.server.version                             '[0.1.0,0.1.1)'
+
+skysail.server.db.version                          '[0.1.0,0.1.1)'
+skysail.server.http.version                        '[0.1.0,0.1.1)'
+skysail.server.queryfilter.version                 '[0.1.0,0.1.1)'
+skysail.server.static.version                      '[0.1.0,0.1.1)'
+skysail.server.converter.version                   '[0.1.0,0.1.1)'
+skysail.server.um.version                          '[0.1.0,0.1.1)'
+
+skysail.server.testsupport.version                 '[0.1.0,0.1.1)'
+
+skysail.server.text.markdown.version               '[0.1.0,0.1.1)'
+skysail.server.text.store.bundleresource.version   '[0.1.0,0.1.1)'
+skysail.server.text.store.db.version               '[0.1.0,0.1.1)'
+skysail.server.text.store.git.version              '[0.1.0,0.1.1)'
+skysail.server.um.simple.version                   '[0.1.0,0.1.1)'
 
 
-## Global defaults are loaded from the bnd library (as shown below), place your
-## specific settings here. Additional settings are inherited from ext/*.bnd and
-## they will be overridden by anything you specify in this file.
-
-## General Options
-#project.dependson:     ${p-dependson;:}
-#project.bootclasspath: ${p-bootclasspath;:}
-#project.buildpath:     ${p-buildpath;:}
-#project.sourcepath:    ${p-sourcepath;:}
-#project.allsourcepath: ${p-allsourcepath;:}
-#project.output:        ${p-output}
-#project.testpath:      ${p-testpath;:}
-
-#-verbose:              false
-#project:               ${basedir}
-#src:                   src
-#bin:                   bin
-#testsrc:               test
-#testbin:               bin_test
-#test-reports:          test-reports
-#target-dir:            generated
-#target:                ${project}/${target-dir}
-#build:                 ${workspace}/cnf
-#p:                     ${basename;${project}}
-#project.name:          ${p}
-#plugin-dir:            ${build}/plugins
-
-## Java Compiler Options
-#java:                  java
-#javac:                 javac
-#javac.source:          1.5
-#javac.target:          1.5
-#javac.profile:
-#javac.debug:           on
-
-## Bnd Options
-#-sources:              true
-#-sourcepath:           ${project}/src
 
 
-## Properties from ext/*.bnd can be referenced in order to extend them. For
-## example, to add one additional plugin to the list defined in
-## ext/repositories.bnd:
-# -plugin: ${ext.repositories.-plugin}, org.example.MyPlugin
+#skysail.server.codegen.version                     '[1.0.0,1.0.1)'
+# wip
+#wip
+# wip
+#skysail.server.osgi.version                        '[0.0.22,0.0.23)'
+#skysail.server.peers.adminconfig.version           '[0.1.0, 0.1.1)'
+#skysail.server.performance.etm.version             '[0.1.1,0.1.2)'
+#skysail.server.plugins.version                     '[0.1.1, 0.1.2)'
+#skysail.server.polymer.version                     '[1.0.0,1.0.1)'
+#wip
+#wip
 
+skysail.server.app.svgedit.version                 '[0.1.0,0.1.1)'
 
-## To enable baselining, uncomment the following lines:
-# -baseline: *
-
-
-## If you use git, you might want to uncomment the following lines:
-# Git-Descriptor:       ${system-allow-fail;git describe --dirty --always}
-# Git-SHA:              ${system-allow-fail;git rev-list -1 HEAD}
-# -diffignore:          Git-Descriptor,Git-SHA
+com.fasterxml.jackson.version                      '[2.5.1,2.5.2)'
+restlet.version                                    2.3.4
+guava.version                                      16.0
+org.apache.felix.framework.version                 '[5.2,6)'
+org.apache.felix.scr.version                       '[2.0.2, 2.0.3)'
+com.orientechnologies.orientdb.version             '[2.1.3, 2.2)'
+osgi.version                                       '[6.0.0,6.0.1)'
+osgi.annotation.version                            '[6.0.1,6.0.2)'
