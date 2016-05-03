@@ -21,7 +21,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.osgi.framework.Bundle;
 
-import de.twenty11.skysail.server.core.restlet.SkysailRouter;
 import io.skysail.domain.core.EntityModel;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.entities.DbEntity;
@@ -30,6 +29,7 @@ import io.skysail.server.app.designer.fields.DbEntityTextField;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
 import io.skysail.server.app.designer.repo.DesignerRepository;
+import io.skysail.server.restlet.SkysailRouter;
 
 @RunWith(MockitoJUnitRunner.class)
 @Ignore

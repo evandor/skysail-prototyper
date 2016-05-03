@@ -104,9 +104,9 @@ public abstract class AbstractDesignerResourceTest extends ResourceTestBase {
     }
 
     public void setUpSubject(String owner) {
-        Mockito.when(subjectUnderTest.getPrincipal()).thenReturn(owner);
-        Mockito.when(subjectUnderTest.getPrincipals()).thenReturn(new SimplePrincipalMap(new HashMap<>()));
-        setSubject(subjectUnderTest);
+        //Mockito.when(subjectUnderTest.getPrincipal()).thenReturn(owner);
+        //Mockito.when(subjectUnderTest.getPrincipals()).thenReturn(new SimplePrincipalMap(new HashMap<>()));
+        //setSubject(subjectUnderTest);
     }
 
     protected void init(SkysailServerResource<?> resource) {

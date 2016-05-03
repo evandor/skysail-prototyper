@@ -88,8 +88,8 @@ public class PostResourceTemplateCompiler extends AbstractTemplateCompiler {
     
     private Optional<DesignerFieldModel> getFieldModelFor(DesignerEntityModel entityModel, FieldRole fieldRole) {
         return entityModel.getFieldValues().stream().map(DesignerFieldModel.class::cast)
-                .filter(fieldModel -> fieldModel.getRole() != null)
-                .filter(fieldModel -> fieldModel.getRole().equals(fieldRole)).findFirst();
+                .filter(fieldModel -> ((DesignerFieldModel)fieldModel).getRole() != null)
+                .filter(fieldModel -> ((DesignerFieldModel)fieldModel).getRole().equals(fieldRole)).findFirst();
     }
 
     

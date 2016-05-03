@@ -57,7 +57,7 @@ public class SkysailEntityCompiler extends SkysailCompiler {
         new PutResourceTemplateCompiler(this, entityModel, null, codes).process();
         createListResource(entityModel, codes);
 
-        entityModel.getRelations().stream().forEach(relation -> createRelationResources(entityModel, relation, codes));
+        entityModel.getRelations().stream().forEach(relation -> createRelationResources(entityModel, (EntityRelation)relation, codes));
 
         return codes;
     }

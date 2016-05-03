@@ -12,6 +12,7 @@ import io.skysail.server.app.designer.codegen.CompiledCode;
 import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.SkysailEntityCompiler;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
+import io.skysail.server.app.designer.model.ReferenceModel;
 
 public class EntityResourceTemplateCompiler extends AbstractTemplateCompiler {
 
@@ -44,13 +45,14 @@ public class EntityResourceTemplateCompiler extends AbstractTemplateCompiler {
         List<String> linkedClasses = new ArrayList<>();
         linkedClasses.add("Put" + entityModel.getSimpleName() + "ResourceGen.class");
         entityModel.getRelations().stream().forEach(relation -> {
-            String targetName = relation.getTargetEntityModel().getSimpleName();
+        	EntityRelation er = (EntityRelation)relation;
+            String targetName = er.getTargetEntityModel().getSimpleName();
             linkedClasses.add("Post" + entityModel.getSimpleName() + "ToNew"+targetName+"RelationResource.class");
             linkedClasses.add(entityModel.getSimpleName() + "s" + targetName + "sResource.class"); // DepartmentsUsersResource
         });
 
         entityModel.getReferences()
-                .forEach(r -> linkedClasses.add("Post" + r.getReferencedEntityName() + "ResourceGen.class"));
+                .forEach(r -> linkedClasses.add("Post" + ((ReferenceModel)r).getReferencedEntityName() + "ResourceGen.class"));
 
         String getLinksCode = "return super.getLinks(" + linkedClasses.stream().collect(Collectors.joining(",")) + ");";
         template.add("links", getLinksCode);

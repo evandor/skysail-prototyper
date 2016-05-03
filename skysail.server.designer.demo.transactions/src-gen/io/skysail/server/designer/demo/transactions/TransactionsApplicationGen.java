@@ -1,21 +1,23 @@
 package io.skysail.server.designer.demo.transactions;
 
-import java.util.*;
+import java.util.List;
 
-import org.osgi.service.component.annotations.*;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.event.EventAdmin;
 
-import io.skysail.server.app.*;
-import de.twenty11.skysail.server.core.restlet.*;
 import io.skysail.domain.Identifiable;
 import io.skysail.domain.core.Repositories;
-import io.skysail.server.app.*;
+import io.skysail.server.app.ApiVersion;
+import io.skysail.server.app.ApplicationProvider;
+import io.skysail.server.app.SkysailApplication;
+import io.skysail.server.designer.demo.transactions.transaction.resources.PostTransactionResourceGen;
+import io.skysail.server.designer.demo.transactions.transaction.resources.PutTransactionResourceGen;
+import io.skysail.server.designer.demo.transactions.transaction.resources.TransactionResourceGen;
+import io.skysail.server.designer.demo.transactions.transaction.resources.TransactionsResourceGen;
 import io.skysail.server.menus.MenuItemProvider;
-
-import io.skysail.server.designer.demo.transactions.*;
-
-import io.skysail.server.designer.demo.transactions.transaction.*;
-import io.skysail.server.designer.demo.transactions.transaction.resources.*;
+import io.skysail.server.restlet.RouteBuilder;
 
 
 /**

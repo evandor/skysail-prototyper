@@ -44,14 +44,14 @@ public class DesignerApplicationModel extends ApplicationModel {
     private void setupRelations(DbApplication dbApplication) {
         dbApplication.getEntities().stream().forEach(dbEntity -> {
             List<DbEntity> oneToManyRelations = dbEntity.getOneToManyRelations();
-            Optional<EntityModel> sourceEntityModel = getEntityModel(dbEntity.getName());
+            Optional<EntityModel<?>> sourceEntityModel = getEntityModel(dbEntity.getName());
             if (!sourceEntityModel.isPresent()) {
                 log.error("error finding entityModel with name '{}'", dbEntity.getName());
                 return;
             }
             oneToManyRelations.stream().forEach(oneToManyRelation -> {
                 String relationName = oneToManyRelation.getName().substring(0, 1).toLowerCase() + oneToManyRelation.getName().substring(1) + "s";
-                Optional<EntityModel> targetEntityModel = getEntityModel(oneToManyRelation.getName());
+                Optional<EntityModel<?>> targetEntityModel = getEntityModel(oneToManyRelation.getName());
                 if (!targetEntityModel.isPresent()) {
                     log.error("error finding entityModel with name '{}'", oneToManyRelation.getName());
                     return;
@@ -80,7 +80,7 @@ public class DesignerApplicationModel extends ApplicationModel {
         return super.toString().replaceFirst("\\n", addedInfo);
     }
 
-    private Optional<EntityModel> getEntityModel(String dbEntityName) {
+    private Optional<EntityModel<?>> getEntityModel(String dbEntityName) {
         return getEntityValues().stream().filter(entity -> 
             entity.getSimpleName().equals(dbEntityName)
         ).findFirst();

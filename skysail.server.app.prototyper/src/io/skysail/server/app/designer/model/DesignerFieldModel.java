@@ -1,5 +1,7 @@
 package io.skysail.server.app.designer.model;
 
+import java.util.List;
+
 import io.skysail.domain.core.*;
 import io.skysail.domain.html.*;
 import io.skysail.server.app.designer.fields.*;
@@ -9,7 +11,7 @@ import lombok.*;
 @Getter
 @EqualsAndHashCode(of = "name")
 @ToString(of = {"name","role", "listViewVisibility", "postViewVisibility", "putViewVisibility"})
-public class DesignerFieldModel extends FieldModel {
+public class DesignerFieldModel extends io.skysail.domain.core.FieldModel {
 
     private final String name;
     private final Visibility listViewVisibility;
@@ -47,7 +49,8 @@ public class DesignerFieldModel extends FieldModel {
 
     public String getListViewAnnotation() {
         if (!entityModel.getRelations().isEmpty()) {
-            EntityModel targetEntityModel = entityModel.getRelations().get(0).getTargetEntityModel();
+        	List<EntityRelation> relations = entityModel.getRelations();
+            EntityModel targetEntityModel = relations.get(0).getTargetEntityModel();
             String target = targetEntityModel.getSimpleName() +"sResourceGen.class";
             return new StringBuilder("@ListView(link = ").append(target).append(")").toString();
         }

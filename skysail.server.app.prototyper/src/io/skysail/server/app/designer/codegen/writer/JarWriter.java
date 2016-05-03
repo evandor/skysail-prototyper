@@ -69,7 +69,7 @@ public class JarWriter {
                 + "osgi.service;filter:=\"(objectClass=io.skysail.server.db.DbService)\";effective:=active,"
                 + "osgi.ee;filter:=\"(&(osgi.ee=JavaSE)(version=1.8))\"");
         
-        Collection<EntityModel> rootEntities = applicationModel.getRootEntities();
+        Collection<EntityModel<?>> rootEntities = applicationModel.getRootEntities();
         String repos = rootEntities.stream().map(e -> "OSGI-INF/"+packageName+"."+e.getSimpleName()+"Repository.xml").collect(Collectors.joining(","));
         String serviceComponent = repos + ",OSGI-INF/"+packageName+"."+applicationModel.getName()+"Application.xml";
         global.put(new Attributes.Name("Service-Component"), serviceComponent);

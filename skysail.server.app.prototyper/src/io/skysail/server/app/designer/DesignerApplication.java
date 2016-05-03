@@ -10,7 +10,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.event.EventAdmin;
 
-import de.twenty11.skysail.server.core.restlet.RouteBuilder;
 import io.skysail.domain.core.Repositories;
 import io.skysail.domain.core.repos.DbRepository;
 import io.skysail.server.ApplicationContextId;
@@ -50,6 +49,7 @@ import io.skysail.server.db.DbService;
 import io.skysail.server.menus.MenuItem;
 import io.skysail.server.menus.MenuItemProvider;
 import io.skysail.server.model.TreeStructure;
+import io.skysail.server.restlet.RouteBuilder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
