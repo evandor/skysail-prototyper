@@ -18,6 +18,12 @@ import io.skysail.server.designer.demo.transactions.transaction.resources.Transa
 import io.skysail.server.designer.demo.transactions.transaction.resources.TransactionsResourceGen;
 import io.skysail.server.menus.MenuItemProvider;
 import io.skysail.server.restlet.RouteBuilder;
+import io.skysail.server.security.config.SecurityConfigBuilder;
+
+import io.skysail.server.designer.demo.transactions.*;
+
+import io.skysail.server.designer.demo.transactions.transaction.*;
+import io.skysail.server.designer.demo.transactions.transaction.resources.*;
 
 
 /**
@@ -46,6 +52,14 @@ public class TransactionsApplicationGen extends SkysailApplication implements Ap
     }
 
 
+
+    @Override
+    protected void defineSecurityConfig(SecurityConfigBuilder securityConfigBuilder) {
+    	securityConfigBuilder
+    		.authorizeRequests()
+    			.startsWithMatcher("").authenticated();
+    		;
+    }
 
     @Override
     protected void attach() {

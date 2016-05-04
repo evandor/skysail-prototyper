@@ -50,6 +50,7 @@ import io.skysail.server.menus.MenuItem;
 import io.skysail.server.menus.MenuItemProvider;
 import io.skysail.server.model.TreeStructure;
 import io.skysail.server.restlet.RouteBuilder;
+import io.skysail.server.security.config.SecurityConfigBuilder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -90,6 +91,14 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
         this.repos = null;
     }
 
+    
+    @Override
+    protected void defineSecurityConfig(SecurityConfigBuilder securityConfigBuilder) {
+    	securityConfigBuilder
+    		.authorizeRequests()
+    			.startsWithMatcher("").authenticated();
+    		;
+    }
 
     @Override
     protected void attach() {
