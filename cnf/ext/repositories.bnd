@@ -18,6 +18,10 @@
         local=${workspace}/../skysail/cnf/releaserepo; \
         pretty=true; \
     , \
+    aQute.bnd.deployer.repository.FixedIndexedRepo;  \
+        name=Skysail Release Repo; \
+        locations=https://raw.githubusercontent.com/evandor/skysail/master/cnf/releaserepo/index.xml; \
+    , \
 	aQute.bnd.deployer.repository.FixedIndexedRepo; \
 		name=Bndtools Hub; \
 		locations=https://raw.githubusercontent.com/bndtools/bundle-hub/master/index.xml.gz; \
