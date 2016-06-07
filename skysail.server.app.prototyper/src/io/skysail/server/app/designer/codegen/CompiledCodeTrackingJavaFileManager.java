@@ -15,7 +15,11 @@ public class CompiledCodeTrackingJavaFileManager extends ForwardingJavaFileManag
     
     static {
         if (javac == null) {
-            log.error("running the app designer application requeres a JDK. It seems this installation is using a JRE");
+        	log.error("");
+        	log.error("==============================================================================================");
+            log.error("running the app designer application requires a JDK. It seems this installation is using a JRE");
+        	log.error("==============================================================================================");
+        	log.error("");
         }
     }
 
