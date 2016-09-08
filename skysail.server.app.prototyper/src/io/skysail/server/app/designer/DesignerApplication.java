@@ -205,7 +205,7 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
     }
 
     public List<MenuItem> createMenuEntries() {
-        MenuItem appMenu = new MenuItem("AppDesigner", "/" + APP_NAME + getApiVersion().getVersionPath(), this);
+        MenuItem appMenu = new MenuItem("AppDesigner", "/" + APP_NAME + getApiVersion().getVersionPath());
         appMenu.setCategory(MenuItem.Category.APPLICATION_MAIN_MENU);
         List<MenuItem> menuItems = new ArrayList<>();
         menuItems.add(appMenu);
@@ -230,7 +230,7 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
         return apps.stream()
             .filter(a -> a != null)
             .map(a -> {
-                MenuItem menu = new MenuItem(a.getName(), "/" + a.getName() + "/v1", this);
+                MenuItem menu = new MenuItem(a.getName(), "/" + a.getName() + "/v1");
                 menu.setCategory(MenuItem.Category.DESIGNER_APP_MENU);
                 return menu;
             })
