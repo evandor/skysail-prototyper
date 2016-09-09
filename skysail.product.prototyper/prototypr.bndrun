@@ -18,6 +18,16 @@
 skysail.config.path            = config/common, config/local, designerbundles
 logback.configurationFile.path = config/local
 
+skysail.server.um:\
+    org.apache.shiro.core;version=1.2,\
+    org.apache.shiro.web;version=1.2,\
+    skysail.server.um.repository.filebased;version=${skysail.server.um.repository.filebased.version},\
+    skysail.server.um.shiro;version=${skysail.server.um.shiro.version}
+
+#skysail.server.um:\
+#   skysail.server.um.httpbasic;version=${skysail.server.um.httpbasic.version},\
+#   skysail.server.um.verifier.filebased;version=${skysail.server.um.verifier.filebased.version}
+
 -runbundles: \
     webconsole.all;version=latest,\
 	${serverbundles-minimal-1.0.0},\
