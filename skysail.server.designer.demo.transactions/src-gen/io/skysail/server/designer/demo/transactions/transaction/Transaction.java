@@ -72,6 +72,17 @@ public class Transaction implements Identifiable, Serializable {
         return this.amount;
     }
 
+    @Field(inputType = InputType.TEXTAREA, htmlPolicy = HtmlPolicy.NO_HTML)
+    private String longdesc;
+
+    public void setLongdesc(String value) {
+        this.longdesc = value;
+    }
+
+    public String getLongdesc() {
+        return this.longdesc;
+    }
+
 
     // --- relations ---
 

@@ -34,13 +34,13 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Creates a new skysail application project (and OSGi bundle) from an application model 
+ * Creates a new skysail application project (and OSGi bundle) from an application model
  * defined by an DbApplication entity.
- * 
+ *
  * The projects location (as everything else) is defined by the application model; the
  * project itself can be directly imported to an eclipse bndtools workspace.
- *  
- * Furthermore, all runtime artifacts (class files, xml files, manifest etc) are created in 
+ *
+ * Furthermore, all runtime artifacts (class files, xml files, manifest etc) are created in
  * a "bundle" subfolder, which is used to create a bundle jar file which can be used in a
  * skysail server runtime right away.
  *
@@ -51,23 +51,23 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationCreator {
 
     private static final String BUNLDE_DIR_NAME = "bundle";
-    
+
     @Getter
     private DesignerApplicationModel applicationModel;
-    
+
     @Setter
     private BundleResourceReader bundleResourceReader = new DefaultBundleResourceReader();
-    
+
     @Setter
     private JavaCompiler javaCompiler = new DefaultJavaCompiler();
-    
+
     private Bundle bundle;
     private SkysailApplicationCompiler skysailApplicationCompiler;
     private EntitiesCreator entitiesCreator;
     private List<CompiledCode> compiledApplicationCode;
     private List<CompiledCode> repositoriesCode;
     private List<CompiledCode> entitiesCode;
-    
+
     @Reference
     private TemplateProvider templateProvider;
 
@@ -76,7 +76,7 @@ public class ApplicationCreator {
     public void activate(ComponentContext componentContext) {
         bundle = componentContext.getBundleContext().getBundle();
     }
-    
+
     @Deactivate
     public void deactivate() {
         templateProvider = null;
@@ -117,21 +117,21 @@ public class ApplicationCreator {
         entitiesCode = entitiesCreator.getCode();//.stream().collect(Collectors.toMap(CompiledCode::getName, Function.identity()));
 
         repositoriesCode = new RepositoryCreator(applicationModel, javaCompiler, bundle, templateProvider).create(null);
-        
+
         createPackageInfoFile(repositoriesCode);
-        
+
         ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, "translations/messages.properties", "\n".getBytes());
         ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, "templates/.gitignore", "\n".getBytes());
-        
+
         skysailApplicationCompiler = new SkysailApplicationCompiler(applicationModel, null, bundle, javaCompiler, templateProvider);
         compiledApplicationCode = skysailApplicationCompiler.createApplication(routeModels);
-        
+
         //SkysailTestCompiler skysailTestCompiler = new SkysailTestCompiler(applicationModel, stGroup, bundle, javaCompiler);
         //List<CompiledCode> compiledTestCode = skysailTestCompiler.createTests(routeModels);
 
         return skysailApplicationCompiler.compile(bundle.getBundleContext());
     }
-        
+
     private boolean doNotCreateBundle() {
         Optional<Bundle> existingBundle = Arrays.stream(bundle.getBundleContext().getBundles()).filter(b -> b.getSymbolicName().equals(applicationModel.getProjectName())).findFirst();
         if (existingBundle.isPresent()) {
@@ -143,15 +143,15 @@ public class ApplicationCreator {
         }
         return false;
     }
-    
+
     private void saveClassFiles() {
-        compiledApplicationCode.stream().filter(c -> c != null).forEach(code -> 
+        compiledApplicationCode.stream().filter(c -> c != null).forEach(code ->
             ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, classNameToPath(code.getClassName()), code.getByteCode()));
-//        entitiesCreator.getCode().values().stream().forEach(code -> 
+//        entitiesCreator.getCode().values().stream().forEach(code ->
 //            ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, classNameToPath(code.getClassName()), code.getByteCode()));
         entitiesCode.stream().forEach(code ->
             ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, classNameToPath(code.getClassName()), code.getByteCode()));
-        repositoriesCode.stream().forEach(code -> 
+        repositoriesCode.stream().forEach(code ->
             ProjectFileWriter.save(applicationModel, BUNLDE_DIR_NAME, classNameToPath(code.getClassName()), code.getByteCode()));
     }
 
@@ -178,7 +178,7 @@ public class ApplicationCreator {
 
     private void createProjectStructure() throws IOException {
         String root = applicationModel.getPath() + "/" + applicationModel.getProjectName();
-        
+
         ProjectFileWriter.mkdirs(root);
 
         createEclipseArtifacts(root);
@@ -188,7 +188,7 @@ public class ApplicationCreator {
         ProjectFileWriter.deleteDir(root + "/src-gen");
         ProjectFileWriter.deleteDir(root + "/test-gen");
         ProjectFileWriter.deleteDir(root + "/" + BUNLDE_DIR_NAME);
-        
+
         ProjectFileWriter.mkdirs(root + "/test");
         ProjectFileWriter.mkdirs(root + "/src-gen");
         ProjectFileWriter.mkdirs(root + "/test-gen");
@@ -212,7 +212,7 @@ public class ApplicationCreator {
         ST classpath = templateProvider.templateFor("classpath");
         Files.write(Paths.get(root + "/.classpath"), classpath.render().getBytes());
     }
-    
+
     private void createBndFileIfNotExisting(String root) throws IOException {
         Path bndPath = Paths.get(root + "/bnd.bnd");
         if (bndPath.toFile().exists()) {
@@ -230,7 +230,7 @@ public class ApplicationCreator {
         bndrun.add("projectName", applicationModel.getProjectName());
         Files.write(Paths.get(root + "/test.bndrun"), bndrun.render().getBytes());
     }
-    
+
     private static void createGitIgnoreFile(String root) throws IOException {
         Files.write(Paths.get(root + "/resources/.gitignore"),
                 "".getBytes());
