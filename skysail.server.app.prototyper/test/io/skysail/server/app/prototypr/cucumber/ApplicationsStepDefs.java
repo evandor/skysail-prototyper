@@ -25,6 +25,7 @@ import io.skysail.server.app.designer.application.resources.PostApplicationResou
 import io.skysail.server.app.designer.application.resources.PutApplicationResource;
 import io.skysail.server.app.designer.repo.DesignerRepository;
 import io.skysail.server.db.OrientGraphDbService;
+import io.skysail.server.db.validators.UniqueNameValidator;
 import io.skysail.server.testsupport.cucumber.CucumberStepContext;
 
 public class ApplicationsStepDefs extends StepDefs {
@@ -56,6 +57,9 @@ public class ApplicationsStepDefs extends StepDefs {
         getApplicationResource = setupResource(new ApplicationResource());
         postResource = setupResource(new PostApplicationResource());
         putResource = setupResource(new PutApplicationResource());
+
+        new UniqueNameValidator().setDbService(dbService);
+
     }
 
     // === WHENS ========================================================================

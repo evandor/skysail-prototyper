@@ -5,14 +5,25 @@ import java.util.List;
 import io.skysail.api.links.Link;
 import io.skysail.server.ResourceContextId;
 import io.skysail.server.app.designer.DesignerApplication;
-import io.skysail.server.app.designer.application.*;
+import io.skysail.server.app.designer.application.ApplicationStatus;
+import io.skysail.server.app.designer.application.DbApplication;
+import io.skysail.server.app.designer.repo.DesignerRepository;
 import io.skysail.server.restlet.resources.ListServerResource;
 
 public class ApplicationsResource extends ListServerResource<DbApplication> {
 
+    private DesignerApplication app;
+    private DesignerRepository repository;
+
     public ApplicationsResource() {
         super(ApplicationResource.class);
         addToContext(ResourceContextId.LINK_TITLE, "list Applications");
+    }
+
+    @Override
+    protected void doInit() {
+        app = (DesignerApplication) getApplication();
+        repository = app.getRepository();
     }
 
     @Override

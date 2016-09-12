@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
         //features
         //tags = {"@localtests"},
-        tags = {"@applications_"},
+        tags = {"@applications"},
         plugin = {"pretty", "json:generated/cucumber.json"}
 )
 public class RunCucumberTests { // NOSONAR
