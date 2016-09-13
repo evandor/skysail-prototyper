@@ -61,7 +61,7 @@ public class DbApplication implements Nameable, Serializable {
     private String projectName;
 
     @Field
-    @Pattern(regexp = "[a-z_.]*", message = "packages should be lowercase with dots and underscores only")
+    @Pattern(regexp = "[a-z_0-9.]*", message = "packages should be lowercase with dots, digits and underscores only")
     //@ListView(hide = true)
     @PostView(tab = "details")
     private String packageName;

@@ -7,7 +7,7 @@ import org.stringtemplate.v4.ST;
 import io.skysail.domain.core.EntityRelation;
 import io.skysail.server.app.designer.codegen.CompiledCode;
 import io.skysail.server.app.designer.codegen.SkysailCompiler;
-import io.skysail.server.app.designer.codegen.SkysailEntityCompiler;
+import io.skysail.server.app.designer.codegen.compilers.SkysailEntityCompiler;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
 
 public class EntityEntityTemplateCompiler extends AbstractTemplateCompiler {

@@ -20,7 +20,7 @@ import org.stringtemplate.v4.ST;
 
 import io.skysail.domain.core.EntityRelation;
 import io.skysail.server.app.designer.codegen.CompiledCode;
-import io.skysail.server.app.designer.codegen.SkysailEntityCompiler;
+import io.skysail.server.app.designer.codegen.compilers.SkysailEntityCompiler;
 import io.skysail.server.app.designer.codegen.templates.AbstractTemplateCompiler;
 import io.skysail.server.app.designer.codegen.templates.EntityResourceTemplateCompiler;
 import io.skysail.server.app.designer.entities.DbEntity;

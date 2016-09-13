@@ -23,10 +23,10 @@ public class $entity.simpleName$s$relation.targetEntityModel.simpleName$Resource
         return null;
     }
     
-    @Override
+   /* @Override
     public List<Link> getLinks() {
         return super.getLinks($entity.simpleName$s$relation.targetEntityModel.simpleName$sResource.class, Post$entity.simpleName$s$relation.targetEntityModel.simpleName$RelationResource.class);
-    }
+    }*/
 
 }
 >>

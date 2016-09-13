@@ -1,4 +1,4 @@
-package io.skysail.server.app.designer.codegen;
+package io.skysail.server.app.designer.codegen.compilers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +7,9 @@ import org.osgi.framework.Bundle;
 import org.stringtemplate.v4.ST;
 
 import io.skysail.domain.core.EntityModel;
+import io.skysail.server.app.designer.codegen.CompiledCode;
+import io.skysail.server.app.designer.codegen.JavaCompiler;
+import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.codegen.writer.ProjectFileWriter;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
@@ -15,15 +18,13 @@ import io.skysail.server.stringtemplate.STGroupBundleDir;
 
 public class SkysailRepositoryCompiler extends SkysailCompiler {
 
-    private EntityModel entityModel;
-    private Bundle bundle;
+    private EntityModel<?> entityModel;
     private TemplateProvider templateProvider;
 
-    public SkysailRepositoryCompiler(DesignerApplicationModel applicationModel, EntityModel entityModel,
+    public SkysailRepositoryCompiler(DesignerApplicationModel applicationModel, EntityModel<?> entityModel,
             STGroupBundleDir stGroup, JavaCompiler compiler, Bundle bundle, TemplateProvider templateProvider) {
         super(applicationModel, stGroup, compiler);
         this.entityModel = entityModel;
-        this.bundle = bundle;
         this.templateProvider = templateProvider;
     }
 
