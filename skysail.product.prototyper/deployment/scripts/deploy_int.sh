@@ -9,7 +9,7 @@ echo ""
 echo "Script Configuration:"
 echo "---------------------"
 
-APPNAME="designer"
+APPNAME="prototypr"
 STAGE="int"
 
 MAIN_DEPLOY_SCRIPT=/home/carsten/.hudson/jobs/skysail/workspace/skysail.server/deployment/scripts/deploy.sh
