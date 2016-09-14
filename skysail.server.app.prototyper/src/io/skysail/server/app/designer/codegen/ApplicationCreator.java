@@ -21,6 +21,7 @@ import org.stringtemplate.v4.ST;
 import io.skysail.server.app.designer.EntitiesCreator;
 import io.skysail.server.app.designer.RepositoryCreator;
 import io.skysail.server.app.designer.application.DbApplication;
+import io.skysail.server.app.designer.codegen.compilers.SkysailApplicationCompiler;
 import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.codegen.writer.JarWriter;
 import io.skysail.server.app.designer.codegen.writer.ProjectFileWriter;

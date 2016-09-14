@@ -2,3 +2,6 @@
 /reports/
 /generated/
 /skysail.product.prototypr.client/webapp/.typingsrc
+/skysail.server.app.usm/
+/skysail.server.app.one2ManyApplication
+/skysail.server.app.wikiApp/

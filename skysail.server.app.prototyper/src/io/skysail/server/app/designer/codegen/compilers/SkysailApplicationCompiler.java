@@ -1,4 +1,4 @@
-package io.skysail.server.app.designer.codegen;
+package io.skysail.server.app.designer.codegen.compilers;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 import org.osgi.framework.Bundle;
 import org.stringtemplate.v4.ST;
 
+import io.skysail.server.app.designer.codegen.CompiledCode;
+import io.skysail.server.app.designer.codegen.JavaCompiler;
+import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.codegen.writer.ProjectFileWriter;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
@@ -22,13 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SkysailApplicationCompiler extends SkysailCompiler {
 
     private String applicationClassName;
-    private Bundle bundle;
     private TemplateProvider templateProvider;
 
     public SkysailApplicationCompiler(DesignerApplicationModel applicationModel, STGroupBundleDir stGroup,
             Bundle bundle, JavaCompiler compiler, TemplateProvider templateProvider) {
         super(applicationModel, stGroup, compiler);
-        this.bundle = bundle;
         this.templateProvider = templateProvider;
     }
 

@@ -7,8 +7,8 @@ import org.stringtemplate.v4.ST;
 import io.skysail.domain.core.EntityRelation;
 import io.skysail.server.app.designer.codegen.CompiledCode;
 import io.skysail.server.app.designer.codegen.SkysailCompiler;
-import io.skysail.server.app.designer.codegen.SkysailEntityCompiler;
 import io.skysail.server.app.designer.codegen.TemplateCompiler;
+import io.skysail.server.app.designer.codegen.compilers.SkysailEntityCompiler;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
 import io.skysail.server.app.designer.model.RouteModel;
 import lombok.Getter;
@@ -38,7 +38,7 @@ public abstract class AbstractTemplateCompiler implements TemplateCompiler {
     @Override
     public final String process() {
         String templateName = getTemplateName();
-        if (templateName == null) {
+        if (templateName == null || templateName.equals("postRelationResource")) {
             return null;
         }
         SkysailEntityCompiler sec = (SkysailEntityCompiler) getSkysailCompiler();

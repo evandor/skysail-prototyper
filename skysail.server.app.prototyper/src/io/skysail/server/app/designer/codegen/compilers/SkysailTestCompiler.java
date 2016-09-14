@@ -1,35 +1,31 @@
-package io.skysail.server.app.designer.codegen;
+package io.skysail.server.app.designer.codegen.compilers;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.stringtemplate.v4.ST;
 
+import io.skysail.server.app.designer.codegen.CompiledCode;
+import io.skysail.server.app.designer.codegen.JavaCompiler;
+import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
 import io.skysail.server.app.designer.model.RouteModel;
 import io.skysail.server.stringtemplate.STGroupBundleDir;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class SkysailTestCompiler extends SkysailCompiler {
 
     private String applicationClassName;
-    private Bundle bundle;
     private TemplateProvider templateProvider;
 
     public SkysailTestCompiler(DesignerApplicationModel applicationModel, STGroupBundleDir stGroup,
             Bundle bundle, JavaCompiler compiler, TemplateProvider templateProvider) {
         super(applicationModel, stGroup, compiler);
-        this.bundle = bundle;
         this.templateProvider = templateProvider;
     }
 
     public List<CompiledCode> createTests(List<RouteModel> routeModels) {
-        STGroupBundleDir stGroupBundleDir = new STGroupBundleDir(bundle, "/code/test");
         ST template = templateProvider.templateFor("abstractAppResourceTest");
         List<CompiledCode> compiledCode = setupTestsForCompilation(template, applicationModel, routeModels);
         return compiledCode;
@@ -45,13 +41,7 @@ public class SkysailTestCompiler extends SkysailCompiler {
                 + "/test/" + classNameToPath(applicationClassName);
         applicationClassNameInSourceFolder = applicationClassNameInSourceFolder.replace("//", "/");
 
-        Path path = Paths.get(applicationClassNameInSourceFolder);
-        if (!path.toFile().exists()) {
-        } else {
-            String existingCode;
-        }
 
-        //template.add("routercode", routerCode(routeModels));
         template.add("application", applicationModel);
         String entityCode = template.render();
 

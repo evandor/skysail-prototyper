@@ -29,7 +29,6 @@ public class JarWriter {
 
         Manifest manifest = new Manifest();
         manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
-        //manifest.getEntries().put("Bnd-LastModified", new Date().getTime());
 
         Attributes global = manifest.getMainAttributes();
         global.put(new Attributes.Name("Bnd-LastModified"), Long.toString(new Date().getTime()));
