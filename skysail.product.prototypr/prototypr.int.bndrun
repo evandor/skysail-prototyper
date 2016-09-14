@@ -23,15 +23,30 @@
 skysail.config.path            = config/common,config/int,designerbundles
 logback.configurationFile.path = config/int
 
--runbundles:\
-    ${serverbundles-1.0.0},\
-    org.apache.felix.shell.remote;version=1.1.2,\
-    skysail.product.designer;version=latest,\
-    skysail.server.codegen;version=latest,\
-    skysail.server.polymer;version=latest,\
-    skysail.server.app.designer;version=latest,\
-    skysail.server.app.notes;version=latest,\
-    skysail.server.uikit.webresource;version=latest
+skysail.server.um:\
+    org.apache.shiro.core;version=1.2,\
+    org.apache.shiro.web;version=1.2,\
+    skysail.server.um.repository.filebased;version=${skysail.server.um.repository.filebased.version},\
+    skysail.server.um.shiro;version=${skysail.server.um.shiro.version}
+
+#skysail.server.um:\
+#   skysail.server.um.httpbasic;version=${skysail.server.um.httpbasic.version},\
+#   skysail.server.um.verifier.filebased;version=${skysail.server.um.verifier.filebased.version}
+        
+-runbundles: \
+    webconsole.all;version=latest,\
+    skysail.server.ext.weaving.methodinvocations;version=latest,\
+    ${serverbundles-minimal-1.0.0},\
+    skysail.server.ext.ramlconsole.webresource;version=${skysail.server.ext.ramlconsole.webresource.version},\
+    skysail.server.app.demo;version=latest,\
+    skysail.server.app.menus;version=latest,\
+    skysail.server.app.webconsole;version=latest,\
+    skysail.server.ext.keyGen;version=latest,\
+    skysail.client.ng2;version=latest,\
+    skysail.product.demo;version=latest,\
+    skysail.server.app.ref.one2many;version=latest,\
+    skysail.server.app.ref.one2many.noagg;version=latest,\
+    skysail.server.app.ref.singleentity;version=latest
 
 
 
