@@ -29,7 +29,7 @@ public class $entity.simpleName$s$relation.targetEntityModel.simpleName$sResourc
     @Override
     protected void doInit() {
         app = ($application.name$Application) getApplication();
-        oeRepo = ($entity.simpleName$Repository) app.getRepository($relation.targetEntityModel.simpleName$.class);
+        oeRepo = ($entity.simpleName$Repository) app.getRepository($entity.simpleName$.class);
     }
 
     @Override
