@@ -20,13 +20,12 @@ import io.skysail.server.app.designer.valueobjects.DbValueObject;
 import io.skysail.server.app.designer.valueobjects.DbValueObjectElement;
 import io.skysail.server.db.DbClassName;
 import io.skysail.server.db.DbService;
+import io.skysail.server.db.GraphDbRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Component(immediate = true, property = "name=DesignerRepository")
 @Slf4j
-public class DesignerRepository implements DbRepository {
-
-    private static DbService dbService;
+public class DesignerRepository extends GraphDbRepository<DbApplication> implements DbRepository {
 
     @Activate
     public void activate() {
@@ -60,14 +59,14 @@ public class DesignerRepository implements DbRepository {
         
         dbService.createEdges("entities", "fields", "oneToManyRelations", "dbValueObjects");
     }
-
+    
     @Reference
     public void setDbService(DbService dbService) {
-        DesignerRepository.dbService = dbService;
+        this.dbService = dbService;
     }
 
     public void unsetDbService(DbService dbService) {
-        DesignerRepository.dbService = null;
+        this.dbService = null;
     }
 
     public <T> List<T> findAll(Class<T> cls) {
@@ -96,7 +95,7 @@ public class DesignerRepository implements DbRepository {
         return dbService.findGraphs(DbValueObjectElement.class, sql);
     }
 
-    public static OrientVertex add(Identifiable entity, ApplicationModel applicationModel) {
+    public OrientVertex add(Identifiable entity, ApplicationModel applicationModel) {
         return (OrientVertex) dbService.persist(entity, applicationModel);
     }
 
@@ -129,15 +128,15 @@ public class DesignerRepository implements DbRepository {
         return dbService.findGraphs(cls.getClass(), "SELECT FROM " + cls.getSimpleName() + " WHERE @rid=" + id);
     }
 
-    @Override
-    public Object save(Identifiable identifiable, ApplicationModel applicationModel) {
-        return (OrientVertex) dbService.persist(identifiable, applicationModel);
-    }
-
-    @Override
-    public Identifiable findOne(String id) {
-        return dbService.findById2(DbApplication.class, id);
-    }
+//    @Override
+//    public Object save(Identifiable identifiable, ApplicationModel applicationModel) {
+//        return (OrientVertex) dbService.persist(identifiable, applicationModel);
+//    }
+//
+//    @Override
+//    public Identifiable findOne(String id) {
+//        return dbService.findById2(DbApplication.class, id);
+//    }
 
     public DbEntity findEntity(String id) {
         return dbService.findById2(DbEntity.class, id);

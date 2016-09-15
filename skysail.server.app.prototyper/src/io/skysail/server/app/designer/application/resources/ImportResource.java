@@ -26,7 +26,11 @@ public class ImportResource extends PostEntityServerResource<ImportDefinition> {
         String content = entity.getYamlImport().replace("&#34;", "\"");
         try {
             DbApplication dbApplication = mapper.readValue(content, DbApplication.class);
-            DesignerRepository.add(dbApplication, ((DesignerApplication)getApplication()).getApplicationModel());
+//            DesignerRepository.add(dbApplication, ((DesignerApplication)getApplication()).getApplicationModel());
+//            
+//            String id = app.getRepository(io.skysail.server.app.wikiapp.space.Space.class).save(entity, app.getApplicationModel()).toString();
+//            entity.setId(id);
+            
         } catch (IOException e) {
             throw new MappingException(e.getMessage(), e);
         }

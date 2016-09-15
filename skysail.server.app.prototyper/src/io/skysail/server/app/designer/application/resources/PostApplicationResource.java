@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import io.skysail.server.ResourceContextId;
 import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
-import io.skysail.server.app.designer.repo.DesignerRepository;
 import io.skysail.server.forms.Tab;
 import io.skysail.server.restlet.resources.PostEntityServerResource;
 
@@ -38,8 +37,11 @@ public class PostApplicationResource extends PostEntityServerResource<DbApplicat
         if (StringUtils.isBlank(entity.getPath())) {
             entity.setPath("../");
         }
-        String id = DesignerRepository.add(entity, app.getApplicationModel()).getId().toString();
+        
+        String id = app.getRepository(DbApplication.class).save(entity, app.getApplicationModel()).toString();
         entity.setId(id);
+//        String id = DesignerRepository.add(entity, app.getApplicationModel()).getId().toString();
+//        entity.setId(id);
     }
 
     @Override
