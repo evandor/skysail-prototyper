@@ -45,23 +45,11 @@
 		</encoder>
 	</appender>
 
-    <!-- <appender name="GELF UDP APPENDER" class="me.moocar.logbackgelf.GelfUDPAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
-        </filter>
-        <remoteHost>localhost</remoteHost>
-        <port>12201</port>
-        <encoder class="me.moocar.logbackgelf.GZIPEncoder">
-            <layout class="me.moocar.logbackgelf.GelfLayout"/>
-        </encoder>
-    </appender> -->
-
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="INFO_FILE" />
 		<appender-ref ref="DEBUG_FILE" />
 		<appender-ref ref="WARN_FILE" />
-		<!-- <appender-ref ref="GELF UDP APPENDER" /> -->
 	</root>
 
 </configuration>
