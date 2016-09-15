@@ -19,5 +19,5 @@ chmod 775 $MAIN_DEPLOY_SCRIPT
 source $MAIN_DEPLOY_SCRIPT
 
 cd /home/carsten/skysail/products/prototypr/int/bin
-mkdir designerbundles
+mkdir -p designerbundles
 
