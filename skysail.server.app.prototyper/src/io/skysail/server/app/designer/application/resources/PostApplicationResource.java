@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.tinkerpop.blueprints.impls.orient.OrientVertex;
+
 import io.skysail.server.ResourceContextId;
 import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
@@ -37,11 +39,13 @@ public class PostApplicationResource extends PostEntityServerResource<DbApplicat
         if (StringUtils.isBlank(entity.getPath())) {
             entity.setPath("../");
         }
-        
-        String id = app.getRepository(DbApplication.class).save(entity, app.getApplicationModel()).toString();
-        entity.setId(id);
-//        String id = DesignerRepository.add(entity, app.getApplicationModel()).getId().toString();
+
+//        String id = app.getRepository(DbApplication.class).save(entity, app.getApplicationModel()).toString();
 //        entity.setId(id);
+
+        OrientVertex save = (OrientVertex) app.getRepository(DbApplication.class).save(entity, app.getApplicationModel());
+//        String id = DesignerRepository.add(entity, app.getApplicationModel()).getId().toString();
+        entity.setId(save.getId().toString());
     }
 
     @Override

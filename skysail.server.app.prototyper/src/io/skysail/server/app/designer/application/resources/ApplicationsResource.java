@@ -8,6 +8,8 @@ import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.ApplicationStatus;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.repo.DesignerRepository;
+import io.skysail.server.queryfilter.Filter;
+import io.skysail.server.queryfilter.pagination.Pagination;
 import io.skysail.server.restlet.resources.ListServerResource;
 
 public class ApplicationsResource extends ListServerResource<DbApplication> {
@@ -23,13 +25,19 @@ public class ApplicationsResource extends ListServerResource<DbApplication> {
     @Override
     protected void doInit() {
         app = (DesignerApplication) getApplication();
-        repository = app.getRepository();
+        repository = (DesignerRepository) app.getRepository(DbApplication.class);
     }
 
     @Override
     public List<DbApplication> getEntity() {
-        DesignerApplication app = (DesignerApplication) getApplication();
-        List<DbApplication> apps = app.getRepository().findAll(DbApplication.class);
+//        DesignerApplication app = (DesignerApplication) getApplication();
+//        List<DbApplication> apps = app.getRepository().findAll(DbApplication.class);
+
+        Filter filter = new Filter(getRequest());
+        Pagination pagination = new Pagination(getRequest(), getResponse(), repository.count(filter));
+        List<DbApplication> apps = repository.find(filter, pagination);
+
+
         apps.stream().forEach(dbApp -> {
             ApplicationStatus status = app.getAppStatus().get(dbApp.getId().replace("#",""));
             dbApp.setStatus(status != null ? status : ApplicationStatus.UNDEFINED);

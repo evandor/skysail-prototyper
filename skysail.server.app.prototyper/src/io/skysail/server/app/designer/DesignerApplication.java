@@ -104,14 +104,24 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
     }
 
     @Override
-    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY, unbind = "unsetRepositories")
+    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY)
     public void setRepositories(Repositories repos) {
-        this.repos = repos;
+        super.setRepositories(repos);
     }
 
     public void unsetRepositories(Repositories repo) {
-        this.repos = null;
+        super.setRepositories(null);
     }
+
+//    @Override
+//    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY, unbind = "unsetRepositories")
+//    public void setRepositories(Repositories repos) {
+//        this.repos = repos;
+//    }
+//
+//    public void unsetRepositories(Repositories repo) {
+//        this.repos = null;
+//    }
 
     @Override
     protected void defineSecurityConfig(SecurityConfigBuilder securityConfigBuilder) {

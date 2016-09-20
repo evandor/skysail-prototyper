@@ -14,7 +14,14 @@ import io.skysail.domain.core.ApplicationModel;
 import io.skysail.domain.core.repos.DbRepository;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.entities.DbEntity;
-import io.skysail.server.app.designer.fields.*;
+import io.skysail.server.app.designer.fields.DbEntityDateField;
+import io.skysail.server.app.designer.fields.DbEntityDateTimeField;
+import io.skysail.server.app.designer.fields.DbEntityField;
+import io.skysail.server.app.designer.fields.DbEntityTextField;
+import io.skysail.server.app.designer.fields.DbEntityTextareaField;
+import io.skysail.server.app.designer.fields.DbEntityTimeField;
+import io.skysail.server.app.designer.fields.DbEntityTrixeditorField;
+import io.skysail.server.app.designer.fields.DbEntityUrlField;
 import io.skysail.server.app.designer.relations.DbRelation;
 import io.skysail.server.app.designer.valueobjects.DbValueObject;
 import io.skysail.server.app.designer.valueobjects.DbValueObjectElement;
@@ -29,37 +36,37 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
 
     @Activate
     public void activate() {
-        dbService.createWithSuperClass("V", 
-                DbClassName.of(DbApplication.class), 
-                DbClassName.of(DbValueObject.class), 
-                DbClassName.of(DbValueObjectElement.class), 
+        dbService.createWithSuperClass("V",
+                DbClassName.of(DbApplication.class),
+                DbClassName.of(DbValueObject.class),
+                DbClassName.of(DbValueObjectElement.class),
                 DbClassName.of(DbRelation.class),
                 DbClassName.of(DbEntity.class),
-                DbClassName.of(DbEntityDateField.class), 
-                DbClassName.of(DbEntityTimeField.class), 
-                DbClassName.of(DbEntityDateTimeField.class), 
+                DbClassName.of(DbEntityDateField.class),
+                DbClassName.of(DbEntityTimeField.class),
+                DbClassName.of(DbEntityDateTimeField.class),
                 DbClassName.of(DbEntityTextField.class),
-                DbClassName.of(DbEntityTextareaField.class), 
-                DbClassName.of(DbEntityTrixeditorField.class), 
+                DbClassName.of(DbEntityTextareaField.class),
+                DbClassName.of(DbEntityTrixeditorField.class),
                 DbClassName.of(DbEntityUrlField.class));
 
         dbService.register(
-                DbApplication.class, 
+                DbApplication.class,
                 DbValueObject.class,
                 DbValueObjectElement.class,
                 DbRelation.class,
-                DbEntity.class, 
-                DbEntityDateField.class, 
-                DbEntityTimeField.class, 
-                DbEntityDateTimeField.class, 
+                DbEntity.class,
+                DbEntityDateField.class,
+                DbEntityTimeField.class,
+                DbEntityDateTimeField.class,
                 DbEntityTextField.class,
-                DbEntityTextareaField.class, 
-                DbEntityTrixeditorField.class, 
+                DbEntityTextareaField.class,
+                DbEntityTrixeditorField.class,
                 DbEntityUrlField.class);
-        
+
         dbService.createEdges("entities", "fields", "oneToManyRelations", "dbValueObjects");
     }
-    
+
     @Reference
     public void setDbService(DbService dbService) {
         this.dbService = dbService;
@@ -69,6 +76,7 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
         this.dbService = null;
     }
 
+    @Deprecated
     public <T> List<T> findAll(Class<T> cls) {
         try {
 
@@ -107,6 +115,7 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
         dbService.update(field, applicationModel);
     }
 
+    @Override
     public Object update(Identifiable entity, ApplicationModel applicationModel) {
         return dbService.update(entity, applicationModel);
     }
@@ -144,11 +153,6 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
 
     public DbValueObject findValueObject(String id) {
         return dbService.findById2(DbValueObject.class, id);
-    }
-
-    @Override
-    public Class<Identifiable> getRootEntity() {
-        return null;
     }
 
     @Override

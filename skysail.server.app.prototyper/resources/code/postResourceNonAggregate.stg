@@ -41,10 +41,10 @@ public class Post$entity.simpleName$ResourceGen extends PostEntityServerResource
 
     @Override
     public void addEntity($entity.id$ entity) {
-        $addEntity$
-        $entity.aggregateRoot.id$ entityRoot = ($entity.aggregateRoot.id$) repository.findOne(getAttribute("id"));
+        /*$addEntity$*/
+        /*$entity.aggregateRoot.id$ entityRoot = ($entity.aggregateRoot.id$) repository.findOne(getAttribute("id"));
         entityRoot.get$entity.simpleName$s().add(entity);
-        repository.update(entityRoot, app.getApplicationModel());
+        repository.update(entityRoot, app.getApplicationModel());*/
     \}
 
     @Override
