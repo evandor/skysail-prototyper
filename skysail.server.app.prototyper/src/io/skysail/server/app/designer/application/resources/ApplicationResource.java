@@ -28,7 +28,7 @@ public class ApplicationResource extends EntityServerResource<DbApplication> {
         super.doInit();
         id = getAttribute("id");
         app = (DesignerApplication) getApplication();
-        repo = app.getRepository();
+        repo = (DesignerRepository) app.getRepository(DbApplication.class);
     }
 
     @Override

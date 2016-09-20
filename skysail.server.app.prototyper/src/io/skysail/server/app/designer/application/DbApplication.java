@@ -22,13 +22,19 @@ import io.skysail.server.app.designer.valueobjects.DbValueObject;
 import io.skysail.server.db.validators.UniqueName;
 import io.skysail.server.forms.ListView;
 import io.skysail.server.forms.PostView;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@ToString(of = { "id", "name", "entities" })
+@ToString(of = { "id", "name", "entities","owner" })
 @UniqueName(entityClass = DbApplication.class)
 public class DbApplication implements Nameable, Serializable {
 
@@ -39,7 +45,7 @@ public class DbApplication implements Nameable, Serializable {
 
     @Field
     private ApplicationStatus status = ApplicationStatus.UNDEFINED;
-    
+
     @Field
     @NotBlank
     @Size(max = 50)

@@ -36,7 +36,7 @@ public class StepDefs {
 
             @Override
             public void describeTo(Description desc) {
-                desc.appendText("expected result: account with non-null id, creationDate");
+                desc.appendText(": application with non-null id and owner");
                 Arrays.stream(keys).forEach(key -> {
                     desc.appendText(", " + key + " = ")
                         .appendValue(data.get(key));
@@ -51,6 +51,11 @@ public class StepDefs {
                 }
                 if (!account.getName().equals(data.get("name"))) {
                     return false;
+                }
+                if (data.get("owner") != null) {
+                    if (!account.getOwner().equals(data.get("owner"))) {
+                        return false;
+                    }
                 }
                 return true;
             }

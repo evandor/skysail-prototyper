@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.restlet.Application;
 import org.restlet.data.Form;
 
 import cucumber.api.PendingException;
@@ -74,7 +73,7 @@ public class ApplicationsStepDefs extends StepDefs {
         applications = getListResource.getEntities(stepContext.getVariant()).getEntity();
     }
 
-    @When("^I open the Application page$")
+    @When("^I open the application page$")
     public void i_open_the_Application_page() {
         prepareRequest(getApplicationResource);
         entity2 = getApplicationResource.getResource(stepContext.getVariant());
@@ -141,10 +140,16 @@ public class ApplicationsStepDefs extends StepDefs {
         throw new PendingException();
     }
 
+    @Then("^the page contains:$")
+    public void the_page_contains(Map<String, String> data) {
+        assertThat(applicationAsList(entity2), hasItem(validApplicationWith(stepContext.substitute(data), "name")));
+    }
+
+
     // === Helper =======================================
 
-    private List<Application> ApplicationAsList(EntityServerResponse<Application> entity22) {
-        List<Application> list = new ArrayList<>();
+    private List<DbApplication> applicationAsList(EntityServerResponse<DbApplication> entity22) {
+        List<DbApplication> list = new ArrayList<>();
         list.add(entity22.getEntity());
         return list;
     }

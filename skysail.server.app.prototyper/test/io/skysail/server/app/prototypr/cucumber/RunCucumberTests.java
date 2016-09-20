@@ -8,8 +8,8 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         //features
-        //tags = {"@localtests"},
-        tags = {"@applications"},
+        //tags = {"@JustMe"},
+        tags = {"@applications","~@Ignore"},
         plugin = {"pretty", "json:generated/cucumber.json"}
 )
 public class RunCucumberTests { // NOSONAR
