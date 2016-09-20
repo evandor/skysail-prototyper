@@ -9,8 +9,9 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
         //features
         //tags = {"@JustMe"},
-        tags = {"@applications","~@Ignore"},
-        plugin = {"pretty", "json:generated/cucumber.json"}
+        //tags = {"@applications","~@Ignore"},
+        tags = {"@entities"},
+		plugin = {"pretty", "json:generated/cucumber.json"}
 )
 public class RunCucumberTests { // NOSONAR
 
