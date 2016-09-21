@@ -11,12 +11,20 @@ Feature: [DesignerApplication] - entity specific features
 Background: 
     Given a running DesignerApplication
 	And an application like this:
-      | name | testapp |
+      | name | testapp_<random> |
 
+@JustMe
 Scenario: adding a simple entity to the application
     When I add an entity like this:
       | name | Entity_<random> |
     And I query all applications
     Then the applications list page contains an application with an entity like:
        | name      | Entity_<random> |
+ 
+@JustMe
+Scenario: adding a simple entity with lowercase name yields error
+    When I add an entity like this:
+      | name | entity_<random> |
+    Then I get a 'Bad Request (400)' response
+ 
  

@@ -35,18 +35,6 @@ public class EntitiesStepDefs extends StepDefs {
 
     public EntitiesStepDefs(AutomationApi api) {
         super(api);
-    }
-
-    @Before
-    public void before(Scenario scenario) {
-        this.scenario = scenario;
-    }
-
-    // === GIVEN =========================================================================
-
-    @Given("^an application like this:$")
-    public void an_application_like_this(Map<String, String> data) {
-
         super.setUp(new DesignerApplication(), new CucumberStepContext(DbApplication.class));
 
         Repositories repos = new Repositories();
@@ -65,7 +53,17 @@ public class EntitiesStepDefs extends StepDefs {
 
         new UniqueNameValidator().setDbService(dbService);
         new UniqueNameForParentValidator().setDbService(dbService);
+    }
 
+    @Before
+    public void before(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
+    // === GIVEN =========================================================================
+
+    @Given("^an application like this:$")
+    public void an_application_like_this(Map<String, String> data) {
         ApplicationsStepDefs appStepDefs = (ApplicationsStepDefs) this.api.getStepDef(ApplicationsStepDefs.class);
         appStepDefs.postData(data);
     }

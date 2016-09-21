@@ -11,6 +11,8 @@ import java.util.Map;
 import org.restlet.data.Form;
 
 import cucumber.api.PendingException;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -36,19 +38,16 @@ public class ApplicationsStepDefs extends StepDefs {
 
     private EntityServerResponse<DbApplication> entity2;
 
+    private Scenario scenario;
+
+    private OrientGraphDbService dbService;
+
     public ApplicationsStepDefs(AutomationApi api) {
         super(api);
-    }
-
-    // === GIVEN ============================================================================
-
-    @Given("^a running DesignerApplication$")
-    public void a_clean_DesignerApplication() {
         super.setUp(new DesignerApplication(),new CucumberStepContext(DbApplication.class));
-
         Repositories repos = new Repositories();
         DesignerRepository repo = new DesignerRepository();
-        OrientGraphDbService dbService = new OrientGraphDbService();
+        dbService = new OrientGraphDbService();
         dbService.activate();
         repo.setDbService(dbService);
         repo.activate();
@@ -61,6 +60,20 @@ public class ApplicationsStepDefs extends StepDefs {
         putResource = setupResource(new PutApplicationResource());
 
         new UniqueNameValidator().setDbService(dbService);
+    }
+
+
+    @Before
+    public void before(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
+    // === GIVEN ============================================================================
+
+    @Given("^a running DesignerApplication$")
+    public void a_clean_DesignerApplication() {
+
+
 
     }
 
@@ -116,12 +129,6 @@ public class ApplicationsStepDefs extends StepDefs {
         assertThat(applications, hasItem(validEntityWith(stepContext.substitute(data), "name")));
     }
 
-//    @Then("^the page contains:$")
-//    public void the_page_contains(Map<String, String> data) {
-//        assertThat(ApplicationAsList(entity2), hasItem(validApplicationWith(stepContext.substitute(data), "name", "iban")));
-//    }
-
-
     @Then("^I get a '(.+)' response$")
     public void i_get_specific_response(String responseType) {
         assertThat(stepContext.getLastResponse().toString(), containsString(responseType));
@@ -129,18 +136,8 @@ public class ApplicationsStepDefs extends StepDefs {
 
     @Then("^the page contains '(.+)'$")
     public void the_page_contains_theString(String name) {
-//        List<Application> Applications = getListResource.getEntities(stepContext.getVariant()).getEntity();
-//        assertThat(Applications, org.hamcrest.Matchers.hasItem(validApplicationWith(substitute(null), "name", "iban")));
         assertThat(entity2.toString(), containsString(name));
     }
-
-//    @Then("^the result does not contain an Application with name '(.+)'$")
-//    public void the_result_does_not_contain_an_Application_with_name(String name) {
-//        List<Application> Applications = getListResource.getEntities(stepContext.getVariant()).getEntity();
-//        //assertThat(Applications, not(org.hamcrest.Matchers.hasItem(validApplicationWith(substitute(null), "name", "iban"))));
-//        Optional<String> found = Applications.stream().map(Application -> Application.getName()).filter(n -> n.equals(name)).findFirst();
-//        assertThat(found.isPresent(), is(false));
-//    }
 
     @Then("^the page contains a newer created date$")
     public void the_page_contains_a_newer_created_date() throws Throwable {
