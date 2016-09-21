@@ -10,13 +10,13 @@ Feature: [DesignerApplication] - entity specific features
 
 Background: 
     Given a running DesignerApplication
-	Given I add an application like this:
+	And an application like this:
       | name | testapp |
 
 Scenario: adding a simple entity to the application
     When I add an entity like this:
-      | name | entity_<random> |
+      | name | Entity_<random> |
     And I query all applications
     Then the applications list page contains such an application:
-       | name      | entity_<random> |
+       | name      | Entity_<random> |
  

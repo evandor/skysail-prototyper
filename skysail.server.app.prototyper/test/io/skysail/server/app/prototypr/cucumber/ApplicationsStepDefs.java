@@ -25,17 +25,23 @@ import io.skysail.server.app.designer.application.resources.PutApplicationResour
 import io.skysail.server.app.designer.repo.DesignerRepository;
 import io.skysail.server.db.OrientGraphDbService;
 import io.skysail.server.db.validators.UniqueNameValidator;
-import io.skysail.server.testsupport.cucumber.CucumberStepContext;
 
 public class ApplicationsStepDefs extends StepDefs {
 
-    private ApplicationsResource getListResource;
+    public ApplicationsStepDefs(AutomationApi api) {
+		super(api);
+	}
+
+
+	private ApplicationsResource getListResource;
     private List<DbApplication> applications;
     private PostApplicationResource postResource;
     private PutApplicationResource putResource;
     private ApplicationResource getApplicationResource;
 
     private EntityServerResponse<DbApplication> entity2;
+
+   
 
     // === GIVEN ============================================================================
 

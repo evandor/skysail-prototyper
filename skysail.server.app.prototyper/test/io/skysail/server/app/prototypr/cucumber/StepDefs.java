@@ -19,6 +19,8 @@ import org.restlet.data.ClientInfo;
 import org.restlet.data.Reference;
 import org.restlet.security.Authenticator;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
 import io.skysail.api.um.AuthenticationService;
 import io.skysail.api.um.AuthorizationService;
 import io.skysail.api.validation.DefaultValidationImpl;
@@ -27,10 +29,16 @@ import io.skysail.server.app.SkysailApplication;
 import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.restlet.resources.SkysailServerResource;
-import io.skysail.server.testsupport.cucumber.CucumberStepContext;
 
 public class StepDefs {
-
+	
+	 protected AutomationApi api;
+	    
+	    public StepDefs(AutomationApi api) {
+			this.api = api; 
+			this.api.addStepDefClass(this);
+		}
+	
     public static Matcher<DbApplication> validApplicationWith(Map<String, String> data, String... keys) {
         return new TypeSafeMatcher<DbApplication>() {
 

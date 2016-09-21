@@ -107,6 +107,8 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
         return (OrientVertex) dbService.persist(entity, applicationModel);
     }
 
+
+    @Deprecated // ?
     public <T> T getById(Class<?> cls, String id) {
         return dbService.findById2(cls, id);
     }
