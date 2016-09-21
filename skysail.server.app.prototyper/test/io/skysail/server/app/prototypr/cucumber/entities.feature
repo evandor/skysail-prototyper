@@ -15,9 +15,8 @@ Background:
 
 Scenario: adding a simple entity to the application
     When I add an entity like this:
-      | name | application_<random> |
+      | name | entity_<random> |
     And I query all applications
     Then the applications list page contains such an application:
-       | name      | application_<random> |
-       | owner     | admin                |
-
+       | name      | entity_<random> |
+ 

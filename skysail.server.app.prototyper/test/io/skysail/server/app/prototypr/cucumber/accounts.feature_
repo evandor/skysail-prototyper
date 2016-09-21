@@ -12,13 +12,6 @@ Background:
     Given a running AccountApplication
 
     
-
-Scenario: retrieving a created account again
-     When I add an account like this:
-       | name | a new one |
-     And I open the account page
-     Then the page contains 'a new one'
-
 Scenario: updating an account entity
      When I add an account like this:
        | name | another account |

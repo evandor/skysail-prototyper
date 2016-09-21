@@ -49,7 +49,7 @@ Scenario: adding a simple application with a name with blanks yields an error
     Then I get a 'Bad Request' response
 
 #@Ignore
-@JustMe
+#@JustMe
 Scenario: if the user sends the "owner" property it should be ignored
     When I add an application like this:
        | name    | application_<random> |
@@ -58,3 +58,20 @@ Scenario: if the user sends the "owner" property it should be ignored
     Then the page contains:
        | name    | application_<random> |
        | owner   | admin                |
+       
+Scenario: retrieving a created application again
+    When I add an application like this:
+       | name    | application_<random> |
+    And I open the application page
+    Then the page contains:
+       | name    | application_<random> |
+
+Scenario: updating an application entity
+    When I add an application like this:
+       | name    | application_<random> |
+     And I change its 'name' to 'another account II'
+    And I open the application page
+    Then the page contains:
+       | name    | application_<random> |
+
+

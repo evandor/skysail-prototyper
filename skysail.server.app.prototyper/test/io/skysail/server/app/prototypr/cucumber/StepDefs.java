@@ -91,7 +91,7 @@ public class StepDefs {
 
     protected SkysailServerResource<?> resource;
 
-    protected CucumberStepContext stepContext;
+    protected static CucumberStepContext stepContext;
 
     public void setUp(DesignerApplication app, CucumberStepContext stepContext) {
         this.stepContext = stepContext;
