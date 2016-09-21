@@ -7,19 +7,14 @@ public class DomainAutomationApi implements AutomationApi {
 
     private Map<String, Object> stepDefinitions = new HashMap<>();
 
-	@Override
-    public String getName() {
-        return toString();
+    @Override
+    public void addStepDefClass(Object def) {
+        this.stepDefinitions.put(def.getClass().getName(), def);
     }
 
-	@Override
-	public void addStepDefClass(Object def) {
-		this.stepDefinitions.put(def.getClass().getName(), def);
-	}
-
-	@Override
-	public Object getStepDef(Class<?> cls) {
-		return this.stepDefinitions.get(cls.getName());
-	}
+    @Override
+    public Object getStepDef(Class<?> cls) {
+        return this.stepDefinitions.get(cls.getName());
+    }
 
 }

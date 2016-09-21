@@ -19,8 +19,6 @@ import org.restlet.data.ClientInfo;
 import org.restlet.data.Reference;
 import org.restlet.security.Authenticator;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
 import io.skysail.api.um.AuthenticationService;
 import io.skysail.api.um.AuthorizationService;
 import io.skysail.api.validation.DefaultValidationImpl;
@@ -31,14 +29,14 @@ import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.restlet.resources.SkysailServerResource;
 
 public class StepDefs {
-	
-	 protected AutomationApi api;
-	    
-	    public StepDefs(AutomationApi api) {
-			this.api = api; 
-			this.api.addStepDefClass(this);
-		}
-	
+
+    protected AutomationApi api;
+
+    public StepDefs(AutomationApi api) {
+        this.api = api;
+        this.api.addStepDefClass(this);
+    }
+
     public static Matcher<DbApplication> validApplicationWith(Map<String, String> data, String... keys) {
         return new TypeSafeMatcher<DbApplication>() {
 
@@ -47,25 +45,56 @@ public class StepDefs {
                 desc.appendText(": application with non-null id and owner");
                 Arrays.stream(keys).forEach(key -> {
                     desc.appendText(", " + key + " = ")
-                        .appendValue(data.get(key));
+                            .appendValue(data.get(key));
                 });
 
             }
 
             @Override
-            protected boolean matchesSafely(DbApplication account) {
-                if (account.getId() == null) {
+            protected boolean matchesSafely(DbApplication dbApp) {
+                if (dbApp.getId() == null) {
                     return false;
                 }
-                if (!account.getName().equals(data.get("name"))) {
+                if (!dbApp.getName().equals(data.get("name"))) {
                     return false;
                 }
                 if (data.get("owner") != null) {
-                    if (!account.getOwner().equals(data.get("owner"))) {
+                    if (!dbApp.getOwner().equals(data.get("owner"))) {
                         return false;
                     }
                 }
                 return true;
+            }
+        };
+    }
+
+    public static Matcher<DbApplication> validEntityWith(Map<String, String> data, String... keys) {
+        return new TypeSafeMatcher<DbApplication>() {
+
+            @Override
+            public void describeTo(Description desc) {
+                desc.appendText(": application with entity with non-null id");
+                Arrays.stream(keys).forEach(key -> {
+                    desc.appendText(", " + key + " = ")
+                            .appendValue(data.get(key));
+                });
+
+            }
+
+            @Override
+            protected boolean matchesSafely(DbApplication dbApp) {
+                return dbApp.getEntities()
+                    .stream()
+                    .filter(entity -> {
+                        if (entity.getId() == null) {
+                            return false;
+                        }
+                        if (!entity.getName().equals(data.get("name"))) {
+                            return false;
+                        }
+                        return true;
+                    })
+                   .findFirst().isPresent();
             }
         };
     }
@@ -124,7 +153,6 @@ public class StepDefs {
         SkysailApplication.setServiceListProvider(serviceListProvider);
         application.setContext(context);
         application.createInboundRoot();
-
 
         org.restlet.Application.setCurrent(application);
 

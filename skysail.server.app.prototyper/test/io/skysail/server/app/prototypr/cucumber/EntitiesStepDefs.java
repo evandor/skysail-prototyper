@@ -3,7 +3,6 @@ package io.skysail.server.app.prototypr.cucumber;
 import java.util.List;
 import java.util.Map;
 
-import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -12,10 +11,6 @@ import io.skysail.api.responses.EntityServerResponse;
 import io.skysail.domain.core.Repositories;
 import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
-import io.skysail.server.app.designer.application.resources.ApplicationResource;
-import io.skysail.server.app.designer.application.resources.ApplicationsResource;
-import io.skysail.server.app.designer.application.resources.PostApplicationResource;
-import io.skysail.server.app.designer.application.resources.PutApplicationResource;
 import io.skysail.server.app.designer.entities.DbEntity;
 import io.skysail.server.app.designer.entities.resources.EntitiesResource;
 import io.skysail.server.app.designer.entities.resources.EntityResource;
@@ -28,68 +23,64 @@ import io.skysail.server.db.validators.UniqueNameValidator;
 
 public class EntitiesStepDefs extends StepDefs {
 
-	public EntitiesStepDefs(AutomationApi api) {
-		super(api);
-		// TODO Auto-generated constructor stub
-	}
+    private EntitiesResource getListResource;
+    private List<DbEntity> entities;
+    private PostEntityResource postResource;
+    private PutEntityResource putResource;
+    private EntityResource getEntityResource;
 
-	private EntitiesResource getListResource;
-	private List<DbEntity> entities;
-	private PostEntityResource postResource;
-	private PutEntityResource putResource;
-	private EntityResource getEntityResource;
+    private EntityServerResponse<DbApplication> entity2;
 
-	private EntityServerResponse<DbApplication> entity2;
+    private Scenario scenario;
 
-	private Scenario scenario;
+    public EntitiesStepDefs(AutomationApi api) {
+        super(api);
+    }
 
-	@Before
-	public void before(Scenario scenario) {
-		this.scenario = scenario;
-		System.out.println(scenario.getSourceTagNames());
-	}
+    @Before
+    public void before(Scenario scenario) {
+        this.scenario = scenario;
+    }
 
-	// === GIVEN
-	// ============================================================================
+    // === GIVEN =========================================================================
 
-	@Given("^an application like this:$")
-	public void an_application_like_this(Map<String, String> data) {
+    @Given("^an application like this:$")
+    public void an_application_like_this(Map<String, String> data) {
 
-		super.setUp(new DesignerApplication(), new CucumberStepContext(DbApplication.class));
+        super.setUp(new DesignerApplication(), new CucumberStepContext(DbApplication.class));
 
-		Repositories repos = new Repositories();
-		DesignerRepository repo = new DesignerRepository();
-		OrientGraphDbService dbService = new OrientGraphDbService();
-		dbService.activate();
-		repo.setDbService(dbService);
-		repo.activate();
-		repos.setRepository(repo);
-		((DesignerApplication) application).setRepositories(repos);
+        Repositories repos = new Repositories();
+        DesignerRepository repo = new DesignerRepository();
+        OrientGraphDbService dbService = new OrientGraphDbService();
+        dbService.activate();
+        repo.setDbService(dbService);
+        repo.activate();
+        repos.setRepository(repo);
+        ((DesignerApplication) application).setRepositories(repos);
 
-		getListResource = setupResource(new EntitiesResource());
-		getEntityResource = setupResource(new EntityResource());
-		postResource = setupResource(new PostEntityResource());
-		putResource = setupResource(new PutEntityResource());
+        getListResource = setupResource(new EntitiesResource());
+        getEntityResource = setupResource(new EntityResource());
+        postResource = setupResource(new PostEntityResource());
+        putResource = setupResource(new PutEntityResource());
 
-		new UniqueNameValidator().setDbService(dbService);
-		new UniqueNameForParentValidator().setDbService(dbService);
-		
-		ApplicationsStepDefs appStepDefs = (ApplicationsStepDefs) this.api.getStepDef(ApplicationsStepDefs.class);
-		appStepDefs.postData(data);
-	}
+        new UniqueNameValidator().setDbService(dbService);
+        new UniqueNameForParentValidator().setDbService(dbService);
 
-	// === WHENS
-	// ========================================================================
+        ApplicationsStepDefs appStepDefs = (ApplicationsStepDefs) this.api.getStepDef(ApplicationsStepDefs.class);
+        appStepDefs.postData(data);
+    }
 
-	@When("^I add an entity like this:$")
-	public void i_add_an_entity_like_this(Map<String, String> data) {
-		prepareRequest(postResource);
-		stepContext.post(postResource, data);
-	}
+    // === WHENS ===============================================================
 
-	// === THENS
-	// ========================================================================
+    @When("^I add an entity like this:$")
+    public void i_add_an_entity_like_this(Map<String, String> data) {
+        prepareRequest(postResource);
+        stepContext.post(postResource, data);
+    }
 
-	// === Helper =======================================
+    // === THENS
+    // ========================================================================
+
+    // === Helper =======================================
 
 }

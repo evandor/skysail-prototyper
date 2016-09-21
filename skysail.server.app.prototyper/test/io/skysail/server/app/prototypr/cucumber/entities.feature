@@ -17,6 +17,6 @@ Scenario: adding a simple entity to the application
     When I add an entity like this:
       | name | Entity_<random> |
     And I query all applications
-    Then the applications list page contains such an application:
+    Then the applications list page contains an application with an entity like:
        | name      | Entity_<random> |
  

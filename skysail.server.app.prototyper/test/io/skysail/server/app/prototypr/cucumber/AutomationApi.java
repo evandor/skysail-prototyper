@@ -2,9 +2,7 @@ package io.skysail.server.app.prototypr.cucumber;
 
 public interface AutomationApi {
 
-	String getName();
+    void addStepDefClass(Object applicationsStepDefs);
 
-	void addStepDefClass(Object applicationsStepDefs);
-
-	Object getStepDef(Class<?> cls);
+    Object getStepDef(Class<?> cls);
 }

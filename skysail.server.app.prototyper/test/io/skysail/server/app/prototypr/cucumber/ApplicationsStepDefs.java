@@ -28,11 +28,6 @@ import io.skysail.server.db.validators.UniqueNameValidator;
 
 public class ApplicationsStepDefs extends StepDefs {
 
-    public ApplicationsStepDefs(AutomationApi api) {
-		super(api);
-	}
-
-
 	private ApplicationsResource getListResource;
     private List<DbApplication> applications;
     private PostApplicationResource postResource;
@@ -41,7 +36,9 @@ public class ApplicationsStepDefs extends StepDefs {
 
     private EntityServerResponse<DbApplication> entity2;
 
-   
+    public ApplicationsStepDefs(AutomationApi api) {
+        super(api);
+    }
 
     // === GIVEN ============================================================================
 
@@ -112,6 +109,11 @@ public class ApplicationsStepDefs extends StepDefs {
     @Then("^the applications list page contains such an application:$")
     public void the_result_contains_an_Application_with(Map<String, String> data) {
         assertThat(applications, hasItem(validApplicationWith(stepContext.substitute(data), "name")));
+    }
+
+    @Then("^the applications list page contains an application with an entity like:$")
+    public void pageContainsApplicationWithEntityLike(Map<String, String> data) {
+        assertThat(applications, hasItem(validEntityWith(stepContext.substitute(data), "name")));
     }
 
 //    @Then("^the page contains:$")
