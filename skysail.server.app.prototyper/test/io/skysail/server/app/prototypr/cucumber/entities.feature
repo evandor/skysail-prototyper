@@ -13,7 +13,6 @@ Background:
 	And an application like this:
       | name | testapp_<random> |
 
-@JustMe
 Scenario: adding a simple entity to the application
     When I add an entity like this:
       | name | Entity_<random> |
@@ -21,10 +20,14 @@ Scenario: adding a simple entity to the application
     Then the applications list page contains an application with an entity like:
        | name      | Entity_<random> |
  
-@JustMe
+#@JustMe
 Scenario: adding a simple entity with lowercase name yields error
     When I add an entity like this:
       | name | entity_<random> |
     Then I get a 'Bad Request (400)' response
  
+Scenario: adding a simple entity with a name containing spaces yields error
+    When I add an entity like this:
+      | name | entity blank _<random> |
+    Then I get a 'Bad Request (400)' response
  
