@@ -28,7 +28,9 @@ import io.skysail.server.app.designer.application.resources.ImportResource;
 import io.skysail.server.app.designer.application.resources.PostApplicationResource;
 import io.skysail.server.app.designer.application.resources.PutApplicationResource;
 import io.skysail.server.app.designer.application.resources.UpdateBundleResource;
+import io.skysail.server.app.designer.codegen.Analysis;
 import io.skysail.server.app.designer.codegen.ApplicationCreator;
+import io.skysail.server.app.designer.codegen.resources.AnalysisResource;
 import io.skysail.server.app.designer.codegen.resources.PostCompilationResource;
 import io.skysail.server.app.designer.entities.DbEntity;
 import io.skysail.server.app.designer.entities.resources.EntitiesResource;
@@ -138,6 +140,8 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
         router.attach(new RouteBuilder("/applications", ApplicationsResource.class));
         router.attach(new RouteBuilder("/applications/{id}", ApplicationResource.class));
         router.attach(new RouteBuilder("/applications/{id}/", PutApplicationResource.class));
+
+        router.attach(new RouteBuilder("/applications/{id}/analysis", AnalysisResource.class));
 
         router.attach(new RouteBuilder("/applications/{id}/compilations/", PostCompilationResource.class));
         router.attach(new RouteBuilder("/update/", UpdateBundleResource.class));

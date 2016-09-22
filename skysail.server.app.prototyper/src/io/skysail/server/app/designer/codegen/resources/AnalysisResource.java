@@ -1,21 +1,41 @@
 package io.skysail.server.app.designer.codegen.resources;
 
+import java.util.List;
+import java.util.Optional;
+
+import io.skysail.api.links.Link;
 import io.skysail.api.responses.SkysailResponse;
+import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
+import io.skysail.server.app.designer.codegen.Analysis;
 import io.skysail.server.restlet.resources.EntityServerResource;
 
-public class AnalysisResource extends EntityServerResource<DbApplication> {
+public class AnalysisResource extends EntityServerResource<Analysis> {
 
-    @Override
-    public SkysailResponse eraseEntity() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	private DesignerApplication app;
 
-    @Override
-    public Object getEntity() {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	@Override
+	protected void doInit() {
+		app = (DesignerApplication) getApplication();
+	}
+
+	@Override
+	public SkysailResponse eraseEntity() {
+		return null;
+	}
+
+	@Override
+	public Analysis getEntity() {
+		String appId = getAttribute("id");
+		DbApplication dbApp = (DbApplication) app.getRepository(DbApplication.class).findOne(appId);
+		Analysis result = new Analysis();
+		
+		return result;
+	}
+	
+	@Override
+	public List<Link> getLinks() {
+		return super.getLinks(PostCompilationResource.class);
+	}
 
 }

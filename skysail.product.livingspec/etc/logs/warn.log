@@ -1,0 +1,4 @@
+2016-09-22 15:14:34,561 WARN  [io.skysail.server.app.SkysailApplication     ] - there are no entities defined for the applicationModel JavaApplicationModel: LivingSpec
+Repositories: 
+Repositories(repositories={io.skysail.server.app.livingspec.storymap.StoryMap=io.skysail.server.app.livingspec.StoryMapRepository@5a3787a2, io.skysail.server.db.versions.impl.ComponentDbVersion=io.skysail.server.db.versions.impl.VersionsRepository@7961e843})
+
