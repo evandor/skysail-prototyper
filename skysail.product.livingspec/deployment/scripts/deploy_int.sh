@@ -18,6 +18,6 @@ echo "calling $MAIN_DEPLOY_SCRIPT"
 chmod 775 $MAIN_DEPLOY_SCRIPT
 source $MAIN_DEPLOY_SCRIPT
 
-#cd /home/carsten/skysail/products/livingspec/int/bin
-#mkdir -p designerbundles
+cd /home/carsten/skysail/products/livingspec/int/bin
+mkdir -p designerbundles
 
