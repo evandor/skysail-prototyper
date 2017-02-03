@@ -1,7 +1,6 @@
 package io.skysail.server.app.designer.codegen.resources;
 
 import java.util.List;
-import java.util.Optional;
 
 import io.skysail.api.links.Link;
 import io.skysail.api.responses.SkysailResponse;
@@ -27,12 +26,12 @@ public class AnalysisResource extends EntityServerResource<Analysis> {
 	@Override
 	public Analysis getEntity() {
 		String appId = getAttribute("id");
-		DbApplication dbApp = (DbApplication) app.getRepository(DbApplication.class).findOne(appId);
+		DbApplication dbApp = app.getRepository().findOne(appId);
 		Analysis result = new Analysis();
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public List<Link> getLinks() {
 		return super.getLinks(PostCompilationResource.class);

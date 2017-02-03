@@ -3,7 +3,6 @@ package $entity.packageName$;
 
 import java.util.List;
 
-import io.skysail.server.queryfilter.Filter;
 import io.skysail.server.queryfilter.pagination.Pagination;
 import io.skysail.server.restlet.resources.PostRelationResource;
 

@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import io.skysail.domain.core.EntityRelation;
 import io.skysail.server.app.designer.codegen.CompiledCode;
 import io.skysail.server.app.designer.codegen.JavaCompiler;
+import io.skysail.server.app.designer.codegen.STGroupBundleDir;
 import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.templates.EntityEntityTemplateCompiler;
 import io.skysail.server.app.designer.codegen.templates.EntityResourceTemplateCompiler;
@@ -23,7 +24,6 @@ import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
 import io.skysail.server.app.designer.model.RouteModel;
-import io.skysail.server.stringtemplate.STGroupBundleDir;
 import lombok.Getter;
 
 public class SkysailEntityCompiler extends SkysailCompiler {
@@ -62,7 +62,7 @@ public class SkysailEntityCompiler extends SkysailCompiler {
         new PutResourceTemplateCompiler(this, entityModel, null, codes).process();
         createListResource(entityModel, codes);
 
-        entityModel.getRelations().stream().forEach(relation -> createRelationResources(entityModel, (EntityRelation)relation, codes));
+        entityModel.getRelations().stream().forEach(relation -> createRelationResources(entityModel, relation, codes));
 
         return codes;
     }
@@ -75,7 +75,7 @@ public class SkysailEntityCompiler extends SkysailCompiler {
 
     private void createListResource(DesignerEntityModel<?> entityModel, Map<String, CompiledCode> codes) {
         String collectionLinks = entityModel.getApplicationModel().getRootEntities().stream()
-              .map(e -> "," + e.getSimpleName() + "sResourceGen.class").collect(Collectors.joining());        
+              .map(e -> "," + e.getSimpleName() + "sResourceGen.class").collect(Collectors.joining());
         ListResourceTemplateCompiler templateCompiler = new ListResourceTemplateCompiler(this, entityModel, null, codes);
         templateCompiler.setCollectionLinks(collectionLinks);
         String listResourceClassName = templateCompiler.process();
@@ -95,6 +95,6 @@ public class SkysailEntityCompiler extends SkysailCompiler {
         return routes;
     }
 
-   
+
 
 }

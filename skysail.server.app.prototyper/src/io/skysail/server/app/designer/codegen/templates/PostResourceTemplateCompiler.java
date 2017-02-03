@@ -1,18 +1,22 @@
 package io.skysail.server.app.designer.codegen.templates;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
 
 import org.stringtemplate.v4.ST;
 
 import io.skysail.domain.core.EntityRelation;
-import io.skysail.server.app.designer.codegen.*;
+import io.skysail.server.app.designer.codegen.CompiledCode;
+import io.skysail.server.app.designer.codegen.SkysailCompiler;
 import io.skysail.server.app.designer.codegen.compilers.SkysailEntityCompiler;
 import io.skysail.server.app.designer.fields.FieldRole;
-import io.skysail.server.app.designer.model.*;
+import io.skysail.server.app.designer.model.DesignerApplicationModel;
+import io.skysail.server.app.designer.model.DesignerEntityModel;
+import io.skysail.server.app.designer.model.DesignerFieldModel;
 import lombok.Setter;
 
 public class PostResourceTemplateCompiler extends AbstractTemplateCompiler {
-    
+
     @Setter
     private DesignerApplicationModel applicationModel;
 
@@ -39,7 +43,7 @@ public class PostResourceTemplateCompiler extends AbstractTemplateCompiler {
     public String getRoutePath() {
         return "/" + getEntityModel().getSimpleName() + "s/";
     }
-    
+
     private CompiledCode setupPostResourceForCompilation(ST template, DesignerApplicationModel applicationModel,
             DesignerEntityModel entityModel) {
         final String simpleClassName = "Post" + entityModel.getSimpleName() + "Resource";
@@ -69,9 +73,8 @@ public class PostResourceTemplateCompiler extends AbstractTemplateCompiler {
                 // SecurityUtils.getSubject();\n");
                 addEntityCode.append("entity.set" + methodName + "(subject.getPrincipal().toString());\n");
             }
-            addEntityCode.append("String id = app.getRepository(" + entityModel.getId()
-                    + ".class).save(entity, app.getApplicationModel()).toString();\n");
-            addEntityCode.append("entity.setId(id);\n");
+            addEntityCode.append("String id = app.getRepository().save(entity, app.getApplicationModel()).toString();\n");
+            //addEntityCode.append("entity.setId(id);\n");
         } else {
             // DesignerEntityModel parent = entityModel.getReferencedBy().get();
             // addEntityCode.append(parent.getId() + " root =
@@ -86,14 +89,14 @@ public class PostResourceTemplateCompiler extends AbstractTemplateCompiler {
         String entityClassName = entityModel.getPackageName() + ".resources." + simpleClassName + "Gen";
         return getSkysailCompiler().collect(entityClassName, entityCode, SkysailEntityCompiler.BUILD_PATH_SOURCE);
     }
-    
+
     private Optional<DesignerFieldModel> getFieldModelFor(DesignerEntityModel entityModel, FieldRole fieldRole) {
         return entityModel.getFieldValues().stream().map(DesignerFieldModel.class::cast)
                 .filter(fieldModel -> ((DesignerFieldModel)fieldModel).getRole() != null)
                 .filter(fieldModel -> ((DesignerFieldModel)fieldModel).getRole().equals(fieldRole)).findFirst();
     }
 
-    
+
 
 
 }

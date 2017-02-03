@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import java.util.*;
 import io.skysail.server.db.DbClassName;
-import io.skysail.domain.Identifiable;
+
 import io.skysail.domain.html.*;
 import io.skysail.server.forms.*;
 

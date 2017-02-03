@@ -23,7 +23,7 @@ public class PostValueObjectsResource extends PostEntityServerResource<DbValueOb
     protected void doInit() {
         super.doInit();
         app = (DesignerApplication) getApplication();
-        repo = (DesignerRepository) app.getRepository(DbValueObject.class);
+        repo = app.getRepository();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PostValueObjectsResource extends PostEntityServerResource<DbValueOb
 
     @Override
     public void addEntity(DbValueObject valueObject) {
-        DbApplication dbApplication = (DbApplication) repo.findOne(getAttribute("id"));
+        DbApplication dbApplication = repo.findOne(getAttribute("id"));
         valueObject.setDbApplication(dbApplication);
 
         Optional<DbValueObject> existingValueObjectWithSameName = dbApplication.getValueObjects().stream()

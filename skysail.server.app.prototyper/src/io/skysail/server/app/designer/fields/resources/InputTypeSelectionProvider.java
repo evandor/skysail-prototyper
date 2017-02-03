@@ -1,11 +1,15 @@
 package io.skysail.server.app.designer.fields.resources;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.restlet.resource.Resource;
 
-import io.skysail.domain.html.*;
+import io.skysail.domain.html.InputType;
+import io.skysail.domain.html.SelectionProvider;
 
 public class InputTypeSelectionProvider implements SelectionProvider {
 
@@ -33,7 +37,6 @@ public class InputTypeSelectionProvider implements SelectionProvider {
     public void setConfiguration(Object osgiServicesProvider) {
     }
 
-    @Override
     public void setResource(Resource resource) {
         this.resource = resource;
     }

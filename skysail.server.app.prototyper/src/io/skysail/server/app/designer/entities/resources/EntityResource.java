@@ -26,7 +26,7 @@ public class EntityResource extends EntityServerResource<DbEntity> {
         appId = getAttribute("id");
         entityId = getAttribute("eid");
         app = (DesignerApplication) getApplication();
-        repo = (DesignerRepository) app.getRepository(DbApplication.class);
+        repo = app.getRepository();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class EntityResource extends EntityServerResource<DbEntity> {
     @Override
     public SkysailResponse<?> eraseEntity() {
         // app.invalidateMenuCache();
-        DbApplication dbApplication = (DbApplication) repo.findOne(appId);
+        DbApplication dbApplication = repo.findOne(appId);
         DbEntity entityToDelete = getEntity();
         dbApplication.getEntities().remove(entityToDelete);
         repo.update(dbApplication, ((DesignerApplication)getApplication()).getApplicationModel()).toString();

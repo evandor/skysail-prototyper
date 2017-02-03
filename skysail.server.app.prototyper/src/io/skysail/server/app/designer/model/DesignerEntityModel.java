@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.domain.core.EntityModel;
 import io.skysail.server.app.designer.entities.DbEntity;
 import io.skysail.server.app.designer.fields.DbEntityField;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DesignerEntityModel<T extends Identifiable> extends EntityModel<T> {
+public class DesignerEntityModel<T extends Entity> extends EntityModel<T> {
 
     // links to other entities
     private final Set<ReferenceModel> references = new HashSet<>();

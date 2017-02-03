@@ -9,7 +9,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.tinkerpop.blueprints.impls.orient.OrientVertex;
 
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.domain.core.ApplicationModel;
 import io.skysail.domain.core.repos.DbRepository;
 import io.skysail.server.app.designer.application.DbApplication;
@@ -67,11 +67,13 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
         dbService.createEdges("entities", "fields", "oneToManyRelations", "dbValueObjects");
     }
 
+    @Override
     @Reference
     public void setDbService(DbService dbService) {
         this.dbService = dbService;
     }
 
+    @Override
     public void unsetDbService(DbService dbService) {
         this.dbService = null;
     }
@@ -103,7 +105,7 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
         return dbService.findGraphs(DbValueObjectElement.class, sql);
     }
 
-    public OrientVertex add(Identifiable entity, ApplicationModel applicationModel) {
+    public OrientVertex add(Entity entity, ApplicationModel applicationModel) {
         return (OrientVertex) dbService.persist(entity, applicationModel);
     }
 
@@ -118,7 +120,7 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
     }
 
     @Override
-    public Object update(Identifiable entity, ApplicationModel applicationModel) {
+    public Object update(Entity entity, ApplicationModel applicationModel) {
         return dbService.update(entity, applicationModel);
     }
 
@@ -158,7 +160,7 @@ public class DesignerRepository extends GraphDbRepository<DbApplication> impleme
     }
 
     @Override
-    public void delete(Identifiable identifiable) {
+    public void delete(Entity identifiable) {
         dbService.delete2(identifiable.getClass(), identifiable.getId());
     }
 

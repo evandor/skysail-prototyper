@@ -36,7 +36,6 @@ public class RelationTypeSelectionProvider implements SelectionProvider {
     public void setConfiguration(Object osgiServicesProvider) {
     }
 
-    @Override
     public void setResource(Resource resource) {
         this.resource = resource;
     }

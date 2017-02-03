@@ -1,9 +1,11 @@
 package io.skysail.server.app.designer.test;
 
+import java.util.Optional;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.domain.core.ApplicationModel;
 import io.skysail.domain.core.repos.DbRepository;
 import io.skysail.server.db.DbService;
@@ -26,27 +28,33 @@ public class TestRepository implements DbRepository {
     }
 
     @Override
-    public Class<? extends Identifiable> getRootEntity() {
+    public Class<? extends Entity> getRootEntity() {
         return null;
     }
 
     @Override
-    public Identifiable findOne(String id) {
+    public Entity findOne(String id) {
         return null;
     }
 
     @Override
-    public Object save(Identifiable identifiable, ApplicationModel appModel) {
+    public Object save(Entity identifiable, ApplicationModel appModel) {
         return null;
     }
 
 
     @Override
-    public void delete(Identifiable identifiable) {
+    public void delete(Entity identifiable) {
     }
 
     @Override
-    public Object update(Identifiable entity, ApplicationModel applicationModel) {
+    public Object update(Entity entity, ApplicationModel applicationModel) {
+        return null;
+    }
+
+    @Override
+    public Optional<Entity> findOne(String identifierKey, String id) {
+        // TODO Auto-generated method stub
         return null;
     }
 

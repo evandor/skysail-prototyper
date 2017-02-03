@@ -22,28 +22,28 @@ public class PostEntityResource extends PostEntityServerResource<DbEntity> {
     protected void doInit() {
         super.doInit();
         app = (DesignerApplication) getApplication();
-        repo = (DesignerRepository) app.getRepository(DbApplication.class);
+        repo = app.getRepository();
     }
 
     @Override
     public DbEntity createEntityTemplate() {
         DbEntity dbEntity = new DbEntity();
-        DbApplication dbApplication = (DbApplication) repo.findOne(getAttribute("id"));
+        DbApplication dbApplication = repo.findOne(getAttribute("id"));
         dbEntity.setDbApplication(dbApplication);
         return dbEntity;
     }
 
     @Override
     public void addEntity(DbEntity entity) {
-        DbApplication dbApplication = (DbApplication) repo.findOne(getAttribute("id"));
+        DbApplication dbApplication = repo.findOne(getAttribute("id"));
         entity.setDbApplication(dbApplication);
-        
+
         Optional<DbEntity> existingEntityWithSameName = dbApplication.getEntities().stream().filter(e -> e.getName().equals(entity.getName())).findFirst();
         if (existingEntityWithSameName.isPresent()) {
             throw new IllegalStateException("entity with same name already exists");
         }
-        
-        
+
+
         dbApplication.getEntities().add(entity);
         //repo.update(dbApplication.getId(), dbApplication, "entities").toString();
         repo.update(dbApplication, app.getApplicationModel());

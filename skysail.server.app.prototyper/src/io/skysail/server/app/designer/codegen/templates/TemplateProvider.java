@@ -1,5 +1,6 @@
 package io.skysail.server.app.designer.codegen.templates;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,7 +12,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.stringtemplate.v4.ST;
 
-import io.skysail.server.stringtemplate.STGroupBundleDir;
+import io.skysail.server.app.designer.codegen.STGroupBundleDir;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,7 +36,7 @@ public class TemplateProvider {
     }
 
     private STGroupBundleDir addBundleDir(String key) {
-        return stGroups.put(key, new STGroupBundleDir(bundle, key));
+        return stGroups.put(key, new STGroupBundleDir(bundle, null, key, Collections.emptyList()));
     }
 
     public ST templateFor(String path) {

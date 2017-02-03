@@ -15,7 +15,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.event.EventAdmin;
 
-import io.skysail.domain.core.Repositories;
 import io.skysail.domain.core.repos.DbRepository;
 import io.skysail.server.ApplicationContextId;
 import io.skysail.server.app.ApplicationProvider;
@@ -28,7 +27,6 @@ import io.skysail.server.app.designer.application.resources.ImportResource;
 import io.skysail.server.app.designer.application.resources.PostApplicationResource;
 import io.skysail.server.app.designer.application.resources.PutApplicationResource;
 import io.skysail.server.app.designer.application.resources.UpdateBundleResource;
-import io.skysail.server.app.designer.codegen.Analysis;
 import io.skysail.server.app.designer.codegen.ApplicationCreator;
 import io.skysail.server.app.designer.codegen.resources.AnalysisResource;
 import io.skysail.server.app.designer.codegen.resources.PostCompilationResource;
@@ -92,7 +90,7 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
     @org.osgi.service.component.annotations.Reference(cardinality = ReferenceCardinality.OPTIONAL)
     @Getter
     private volatile EventAdmin eventAdmin;
-    private Repositories repos;
+    //private Repositories repos;
 
     @Getter
     private static Map<String, ApplicationStatus> appStatus = new HashMap<>();
@@ -103,27 +101,20 @@ public class DesignerApplication extends SkysailApplication implements MenuItemP
     public DesignerApplication() {
         super(APP_NAME);
         addToAppContext(ApplicationContextId.IMG, "/static/img/silk/paintbrush.png");
+        this.repo = new DesignerRepository();
+        this.repo.setDbService(dbService);
     }
-
-    @Override
-    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY)
-    public void setRepositories(Repositories repos) {
-        super.setRepositories(repos);
-    }
-
-    public void unsetRepositories(Repositories repo) {
-        super.setRepositories(null);
-    }
-
+//
 //    @Override
-//    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY, unbind = "unsetRepositories")
+//    @Reference(policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.MANDATORY)
 //    public void setRepositories(Repositories repos) {
-//        this.repos = repos;
+//        super.setRepositories(repos);
 //    }
 //
 //    public void unsetRepositories(Repositories repo) {
-//        this.repos = null;
+//        super.setRepositories(null);
 //    }
+
 
     @Override
     protected void defineSecurityConfig(SecurityConfigBuilder securityConfigBuilder) {

@@ -1,6 +1,6 @@
 package io.skysail.product.livingspec;
 
-import io.skysail.domain.Identifiable;
+
 import lombok.*;
 
 @Getter

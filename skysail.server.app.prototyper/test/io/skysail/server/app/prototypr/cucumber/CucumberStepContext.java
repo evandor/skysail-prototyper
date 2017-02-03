@@ -13,7 +13,7 @@ import org.restlet.engine.resource.VariantInfo;
 import org.restlet.representation.Variant;
 
 import io.skysail.api.responses.SkysailResponse;
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.server.restlet.resources.PostEntityServerResource;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +35,7 @@ public class CucumberStepContext {
 
     @Getter
     @Setter
-    private SkysailResponse<? extends Identifiable> lastResponse;
+    private SkysailResponse<? extends Entity> lastResponse;
 
     public CucumberStepContext(Class<?> entityClass) {
         this.entityClass = entityClass;
@@ -87,7 +87,7 @@ public class CucumberStepContext {
 
     public void post(PostEntityServerResource<?> resource, Map<String, String> data) {
         Form form = toForm(data);
-        SkysailResponse<? extends Identifiable> response = resource.post(form, getVariant());
+        SkysailResponse<? extends Entity> response = resource.post(form, getVariant());
 		setLastResponse(response);
     }
 }

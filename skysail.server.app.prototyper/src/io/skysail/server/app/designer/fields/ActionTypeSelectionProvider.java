@@ -28,7 +28,6 @@ public class ActionTypeSelectionProvider implements SelectionProvider {
     public void setConfiguration(Object osgiServicesProvider) {
     }
 
-    @Override
     public void setResource(Resource resource) {
     }
 

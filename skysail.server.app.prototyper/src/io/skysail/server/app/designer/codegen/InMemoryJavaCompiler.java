@@ -1,25 +1,36 @@
 package io.skysail.server.app.designer.codegen;
 
 import java.io.File;
-import java.net.*;
-import java.util.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.tools.*;
+import javax.tools.Diagnostic;
 import javax.tools.Diagnostic.Kind;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaFileObject;
+import javax.tools.ToolProvider;
 import javax.validation.ConstraintViolation;
 
 import org.apache.commons.beanutils.DynaProperty;
-import org.osgi.framework.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Component;
 import org.restlet.resource.ServerResource;
 
 import com.tinkerpop.blueprints.impls.orient.OrientVertex;
 
 import io.skysail.api.links.Link;
-import io.skysail.domain.core.Repositories;
 import io.skysail.server.app.SkysailApplication;
 import io.skysail.server.app.designer.DesignerApplication;
+import io.skysail.server.queryfilter.filtering.Filter;
 import io.skysail.server.restlet.resources.ListServerResource;
 import io.skysail.server.utils.CompositeClassLoader;
 import lombok.Getter;
@@ -75,7 +86,7 @@ public class InMemoryJavaCompiler {
     public static void compile(BundleContext bundleContext)//, String className, String sourceCodeInText)
             throws Exception {
 
-        List<String> optionList = new ArrayList<String>();
+        List<String> optionList = new ArrayList<>();
 
         Set<String> bundleLocations = new HashSet<>();
         Bundle[] bundles = bundleContext.getBundles();
@@ -90,10 +101,8 @@ public class InMemoryJavaCompiler {
         getBundleLocationFor(com.fasterxml.jackson.annotation.JacksonAnnotation.class, bundleLocations, bundles);
         getBundleLocationFor(Component.class, bundleLocations, bundles);
         getBundleLocationFor(org.osgi.service.event.Event.class, bundleLocations, bundles);
-        getBundleLocationFor(org.restlet.ext.raml.RamlApplication.class, bundleLocations, bundles);
         getBundleLocationFor(org.apache.commons.lang3.text.StrBuilder.class, bundleLocations, bundles);
-        getBundleLocationFor(Repositories.class, bundleLocations, bundles);
-        getBundleLocationFor(io.skysail.server.queryfilter.Filter.class, bundleLocations, bundles);
+        getBundleLocationFor(Filter.class, bundleLocations, bundles);
         getBundleLocationFor(OrientVertex.class, bundleLocations, bundles);
         //getBundleLocationFor(ResourceContextId.class, bundleLocations, bundles);
         //getBundleLocationFor(ResourceTestBase.class, bundleLocations, bundles);
@@ -108,10 +117,10 @@ public class InMemoryJavaCompiler {
         });
         log.info("classpath was set to {}", locs);
 
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         javax.tools.JavaCompiler.CompilationTask task = javac
                 .getTask(null, fileManager, diagnostics, optionList, null, sourceCodes);
-        task.call(); 
+        task.call();
         // TODO manage error information
         boolean errorFound = dumpErrorsIfExistent(diagnostics, "xxx");
         if (errorFound) {

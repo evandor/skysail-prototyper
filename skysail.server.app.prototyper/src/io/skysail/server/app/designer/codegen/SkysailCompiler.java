@@ -1,6 +1,7 @@
 package io.skysail.server.app.designer.codegen;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.osgi.framework.BundleContext;
@@ -8,7 +9,6 @@ import org.stringtemplate.v4.STGroupDir;
 
 import io.skysail.server.app.designer.codegen.writer.ProjectFileWriter;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
-import io.skysail.server.stringtemplate.STGroupBundleDir;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ public class SkysailCompiler {
     protected DesignerApplicationModel applicationModel;
     protected STGroupDir stGroupDir;
     private JavaCompiler compiler;
-    
+
     public SkysailCompiler(DesignerApplicationModel applicationModel, STGroupBundleDir stGroup, JavaCompiler compiler) {
         this.applicationModel = applicationModel;
         this.stGroupDir = stGroup;
@@ -46,7 +46,7 @@ public class SkysailCompiler {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        
+
         ProjectFileWriter.save(applicationModel, buildPathFolder, classNameToPath(className), entityCode.getBytes());
         return compiledCode;
     }

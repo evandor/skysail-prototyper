@@ -1,23 +1,28 @@
 package io.skysail.server.app.designer.codegen;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.isNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Dictionary;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.osgi.framework.*;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 
-import io.skysail.domain.core.Repositories;
 import io.skysail.server.app.ApplicationProvider;
 import io.skysail.server.app.SkysailApplication;
 import io.skysail.server.app.designer.application.DbApplication;
@@ -35,9 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationCreatorTest {
 
     @Mock
-    private Repositories reposMock;
-
-    @Mock
     private Bundle bundleMock;
 
     @Mock
@@ -51,7 +53,7 @@ public class ApplicationCreatorTest {
 
     @Mock
     private ComponentContext componentContextMock;
-    
+
     @Spy
     private JavaCompiler javaCompilerSpy = new TestJavaCompiler();
 
@@ -64,33 +66,33 @@ public class ApplicationCreatorTest {
         when(bundleMock.getResource("/code/OSGI-INF")).thenReturn(new URL("file:///" + currentOsgiInfDir));
 
         when(bundleMock.getBundleContext()).thenReturn(bundleContextMock);
-        
+
         when(bundleContextMock.getBundles()).thenReturn(new Bundle[0]);
     }
 
-    @Test
-    @Ignore
-    public void creates_InMemoryBundle_from_empty_application() throws IOException {
-        ApplicationCreator applicationCreator = setupApplicationCreator(YamlTestFileReader.read("empty.yml"));
-
-        applicationCreator.createApplication(YamlTestFileReader.read("empty.yml"));
-
-        verifyCreatedApplication(applicationCreator);
-        Collection<String> repositoryIds = applicationCreator.getApplicationModel().getRepositoryIds();
-        assertThat(repositoryIds.size(),is(0));
-    }
-
-    @Test
-    @Ignore // FIXME
-    public void creates_InMemoryBundle_from_application_with_one_entity() throws IOException {
-        ApplicationCreator applicationCreator = setupApplicationCreator(YamlTestFileReader.read("transactions.yml"));
-
-        applicationCreator.createApplication(YamlTestFileReader.read("transactions.yml"));
-
-        verifyCreatedApplication(applicationCreator);
-        Collection<String> repositoryIds = applicationCreator.getApplicationModel().getRepositoryIds();
-        assertThat(repositoryIds.size(),is(0));
-    }
+//    @Test
+//    @Ignore
+//    public void creates_InMemoryBundle_from_empty_application() throws IOException {
+//        ApplicationCreator applicationCreator = setupApplicationCreator(YamlTestFileReader.read("empty.yml"));
+//
+//        applicationCreator.createApplication(YamlTestFileReader.read("empty.yml"));
+//
+//        verifyCreatedApplication(applicationCreator);
+//        Collection<String> repositoryIds = applicationCreator.getApplicationModel().getRepositoryIds();
+//        assertThat(repositoryIds.size(),is(0));
+//    }
+//
+//    @Test
+//    @Ignore // FIXME
+//    public void creates_InMemoryBundle_from_application_with_one_entity() throws IOException {
+//        ApplicationCreator applicationCreator = setupApplicationCreator(YamlTestFileReader.read("transactions.yml"));
+//
+//        applicationCreator.createApplication(YamlTestFileReader.read("transactions.yml"));
+//
+//        verifyCreatedApplication(applicationCreator);
+//        Collection<String> repositoryIds = applicationCreator.getApplicationModel().getRepositoryIds();
+//        assertThat(repositoryIds.size(),is(0));
+//    }
 
     @Test
     @Ignore // FIXME
@@ -107,11 +109,11 @@ public class ApplicationCreatorTest {
         verifyJavaFilesExist(applicationCreator.getApplicationModel());
        // verifyApplicationServiceWasRegistered();
     }
-    
+
     private void verifyJavaCompilerCalls() {
         verify(javaCompilerSpy, times(1)).reset();
     }
-    
+
     private ApplicationCreator setupApplicationCreator(DbApplication application) {
         ApplicationCreator applicationCreator = new ApplicationCreator();
         applicationCreator.setBundleResourceReader(new BundleResourceReader() {
@@ -123,7 +125,7 @@ public class ApplicationCreatorTest {
         applicationCreator.setJavaCompiler(javaCompilerSpy);
         return applicationCreator;
     }
-    
+
     @SuppressWarnings("unchecked")
     private void verifyApplicationServiceWasRegistered() {
         verify(bundleContextMock).registerService(
@@ -134,7 +136,7 @@ public class ApplicationCreatorTest {
                         return actualArgument[0].equals(ApplicationProvider.class.getName()) &&
                                actualArgument[1].equals(MenuItemProvider.class.getName());
                     }
-                    
+
                 }),
                 org.mockito.Matchers.argThat(new ArgumentMatcher<Object>() {
 
@@ -145,7 +147,7 @@ public class ApplicationCreatorTest {
 
                 }), isNull(Dictionary.class));
     }
-    
+
     private void verifyJavaFilesExist(DesignerApplicationModel appModel) {
         String projectPath = "generated/" + appModel.getName() + "/" + appModel.getProjectName() + "/";
         String applicationPath = projectPath + "src-gen/" + appModel.getPackageName().replace(".", "/") + "/";
@@ -155,7 +157,7 @@ public class ApplicationCreatorTest {
     private void verifyProjectFilesExist(DesignerApplicationModel appModel) {
         // "generated/empty/skysail.server.designer.empty"
         String projectPath = "generated/" + appModel.getName() + "/" + appModel.getProjectName() + "/";
-        
+
         assertFileExists(projectPath, ".project");
         assertFileExists(projectPath, ".classpath");
         assertFileExists(projectPath, "bnd.bnd");

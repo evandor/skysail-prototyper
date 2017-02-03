@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.domain.Nameable;
 import io.skysail.domain.html.Field;
 import io.skysail.domain.html.InputType;
@@ -24,7 +24,13 @@ import io.skysail.server.app.designer.fields.DbEntityField;
 import io.skysail.server.app.designer.fields.resources.FieldsResource;
 import io.skysail.server.db.validators.UniqueNameForParent;
 import io.skysail.server.forms.ListView;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
@@ -33,7 +39,7 @@ import lombok.*;
 @ToString(of = { "id", "name", "fields" })
 @UniqueNameForParent(entityClass = DbEntity.class, parent = "dbApplication", relationName = "entities")
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="id")
-public class DbEntity implements Identifiable, Nameable, Serializable {
+public class DbEntity implements Entity, Nameable, Serializable {
 
     private static final long serialVersionUID = 7571240311935363328L;
 
@@ -60,14 +66,14 @@ public class DbEntity implements Identifiable, Nameable, Serializable {
 
     @JsonBackReference
     private DbEntity parent;
-    
+
     @Relation
     private List<DbEntity> oneToManyRelations = new ArrayList<>();
 
     public DbEntity(@NonNull String name) {
         this.name = name;
     }
-    
+
     @Builder
     public DbEntity(@NonNull String name, boolean rootEntity) {
         this.name = name;

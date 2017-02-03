@@ -6,14 +6,14 @@ $entity.fields.keys: { key|
 $listView(entity.fields.(key))$
 $postView(entity.fields.(key))$
 $putView(entity.fields.(key))$
-private $entity.fields.(key).type.simpleName$ $key$;
+private $entity.fields.(key).type.simpleName$ $entity.fields.(key).name$;
 
 public void $entity.fields.(key).setMethodName$($entity.fields.(key).type.simpleName$ value) {
-    this.$key$ = value;
+    this.$entity.fields.(key).name$ = value;
 \}
 
 public $entity.fields.(key).type.simpleName$ $entity.fields.(key).getMethodName$() {
-    return this.$key$;
+    return this.$entity.fields.(key).name$;
 \}
 }$
 >>

@@ -1,13 +1,13 @@
 package io.skysail.server.app.designer;
 
+import java.util.List;
+
 import io.skysail.api.links.Link;
-import io.skysail.domain.Identifiable;
+import io.skysail.domain.Entity;
 import io.skysail.server.app.designer.application.resources.ApplicationsResource;
 import io.skysail.server.restlet.resources.ListServerResource;
 
-import java.util.List;
-
-public class RootResource extends ListServerResource<Identifiable> {
+public class RootResource extends ListServerResource<Entity> {
 
     @Override
     public List<Link> getLinks() {
@@ -15,7 +15,7 @@ public class RootResource extends ListServerResource<Identifiable> {
     }
 
     @Override
-    public List<Identifiable> getEntity() {
+    public List<Entity> getEntity() {
         return null;
     }
 

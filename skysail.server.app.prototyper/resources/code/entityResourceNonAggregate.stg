@@ -29,7 +29,7 @@ public class $entity.simpleName$ResourceGen extends EntityServerResource<$entity
     protected void doInit() {
         id = getAttribute("id");
         app = ($application.name$Application) getApplication();
-       // repository = ($entity.simpleName$Repository) app.getRepository($entity.id$.class);
+       // repository = ($entity.simpleName$Repository) app.getRepository();
     \}
 
 

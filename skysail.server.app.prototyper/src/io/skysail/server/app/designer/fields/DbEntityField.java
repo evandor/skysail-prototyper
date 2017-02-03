@@ -3,22 +3,30 @@ package io.skysail.server.app.designer.fields;
 import java.io.Serializable;
 
 import javax.persistence.Id;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import io.skysail.domain.*;
-import io.skysail.domain.html.*;
+import io.skysail.domain.Entity;
+import io.skysail.domain.Nameable;
+import io.skysail.domain.html.Field;
+import io.skysail.domain.html.InputType;
 import io.skysail.server.app.designer.fields.provider.VisibilitySelectionProvider;
 import io.skysail.server.app.designer.fields.resources.InputTypeSelectionProvider;
 import io.skysail.server.app.designer.fields.roles.FieldRoleSelectionProvider;
-import io.skysail.server.forms.*;
-import lombok.*;
+import io.skysail.server.forms.PostView;
+import io.skysail.server.forms.Visibility;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public abstract class DbEntityField implements Identifiable, Nameable, Serializable {
+public abstract class DbEntityField implements Entity, Nameable, Serializable {
 
     private static final long serialVersionUID = -3876765006276811418L;
 
@@ -47,11 +55,11 @@ public abstract class DbEntityField implements Identifiable, Nameable, Serializa
     @Field(selectionProvider = InputTypeSelectionProvider.class)
     @PostView(visibility = Visibility.HIDE)
     private InputType type;
-    
+
     @Field(inputType = InputType.CHECKBOX)
     @PostView(tab = "optional")
     protected Boolean mandatory;
-    
+
     @Field(selectionProvider = FieldRoleSelectionProvider.class)
     @PostView(tab = "special")
     protected FieldRole role = FieldRole.NONE;
@@ -59,6 +67,6 @@ public abstract class DbEntityField implements Identifiable, Nameable, Serializa
     public Class<?> getFieldType() {
         return String.class;
     }
-    
+
 
 }

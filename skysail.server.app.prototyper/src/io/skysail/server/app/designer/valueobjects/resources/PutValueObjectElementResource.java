@@ -20,9 +20,9 @@ public class PutValueObjectElementResource extends PutEntityServerResource<DbVal
     protected void doInit() throws ResourceException {
         super.doInit();
         app = (DesignerApplication) getApplication();
-        repository = (DesignerRepository) app.getRepository(DbValueObjectElement.class);
+        repository = app.getRepository();
     }
-    
+
     @Override
     public DbValueObjectElement getEntity() {
         DbValueObject valueObject = repository.findValueObject(getAttribute("id"));
@@ -34,7 +34,7 @@ public class PutValueObjectElementResource extends PutEntityServerResource<DbVal
         System.out.println(element);
 //        app.getRepository().update(element, app.getApplicationModel());
     }
-    
+
     @Override
     public List<TreeStructure> getTreeRepresentation() {
         return app.getTreeRepresentation(getAttribute("id"));

@@ -2,11 +2,16 @@ package io.skysail.server.app.designer.model;
 
 import java.util.List;
 
-import io.skysail.domain.core.*;
-import io.skysail.domain.html.*;
-import io.skysail.server.app.designer.fields.*;
+import io.skysail.domain.core.EntityModel;
+import io.skysail.domain.core.EntityRelation;
+import io.skysail.domain.html.HtmlPolicy;
+import io.skysail.domain.html.InputType;
+import io.skysail.server.app.designer.fields.DbEntityField;
+import io.skysail.server.app.designer.fields.FieldRole;
 import io.skysail.server.forms.Visibility;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(of = "name")
@@ -22,7 +27,7 @@ public class DesignerFieldModel extends io.skysail.domain.core.FieldModel {
     private DesignerEntityModel entityModel;
 
     public DesignerFieldModel(DesignerEntityModel entityModel, DbEntityField dbField) {
-        super(dbField.getName(), dbField.getFieldType());
+        super(entityModel, dbField.getName(), dbField.getFieldType());
         this.entityModel = entityModel;
         this.name = dbField.getName();
         setInputType(dbField.getType());
@@ -31,7 +36,7 @@ public class DesignerFieldModel extends io.skysail.domain.core.FieldModel {
         putViewVisibility = Visibility.valueOf(dbField.getPutViewVisibility());
         this.role = dbField.getRole();
     }
-    
+
     public String getGetMethodName() {
         return "get".concat(capitalized(name));
     }
@@ -39,7 +44,7 @@ public class DesignerFieldModel extends io.skysail.domain.core.FieldModel {
     public String getSetMethodName() {
         return "set".concat(capitalized(name));
     }
-    
+
     public String getHtmlPolicy() {
         if (inputType.equals(InputType.TRIX_EDITOR)) {
             return HtmlPolicy.TRIX_EDITOR.name();

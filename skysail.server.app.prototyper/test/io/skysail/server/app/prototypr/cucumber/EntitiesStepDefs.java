@@ -8,7 +8,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import io.skysail.api.responses.EntityServerResponse;
-import io.skysail.domain.core.Repositories;
 import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.entities.DbEntity;
@@ -37,14 +36,14 @@ public class EntitiesStepDefs extends StepDefs {
         super(api);
         super.setUp(new DesignerApplication(), new CucumberStepContext(DbApplication.class));
 
-        Repositories repos = new Repositories();
+//        Repositories repos = new Repositories();
         DesignerRepository repo = new DesignerRepository();
         OrientGraphDbService dbService = new OrientGraphDbService();
         dbService.activate();
         repo.setDbService(dbService);
         repo.activate();
-        repos.setRepository(repo);
-        ((DesignerApplication) application).setRepositories(repos);
+//        repos.setRepository(repo);
+//        ((DesignerApplication) application).setRepositories(repos);
 
         getListResource = setupResource(new EntitiesResource());
         getEntityResource = setupResource(new EntityResource());

@@ -1,13 +1,16 @@
 package io.skysail.server.app.designer.fields.resources;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import io.skysail.server.ResourceContextId;
 import io.skysail.server.app.designer.DesignerApplication;
-import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.application.resources.ApplicationsResource;
 import io.skysail.server.app.designer.entities.DbEntity;
-import io.skysail.server.app.designer.fields.*;
+import io.skysail.server.app.designer.fields.DbEntityField;
+import io.skysail.server.app.designer.fields.FieldRole;
 import io.skysail.server.app.designer.repo.DesignerRepository;
 import io.skysail.server.forms.Tab;
 import io.skysail.server.model.TreeStructure;
@@ -22,7 +25,7 @@ public abstract class PostFieldResource<T extends DbEntityField> extends PostEnt
 
     private DesignerApplication app;
     private DesignerRepository repo;
-    
+
     @Getter
     private static Set<Class<? extends PostFieldResource<?>>> extendingClasses = new HashSet<>();
 
@@ -39,7 +42,7 @@ public abstract class PostFieldResource<T extends DbEntityField> extends PostEnt
     protected void doInit() {
         super.doInit();
         app = (DesignerApplication) getApplication();
-        repo = (DesignerRepository) app.getRepository(DbApplication.class);
+        repo = app.getRepository();
     }
 
     @Override
@@ -48,7 +51,7 @@ public abstract class PostFieldResource<T extends DbEntityField> extends PostEnt
         theEntity.getFields().add(field);
         app.getRepository().update(theEntity, ((DesignerApplication)getApplication()).getApplicationModel());
     }
-    
+
     @Override
     public String redirectTo() {
         return super.redirectTo(ApplicationsResource.class);
@@ -59,7 +62,7 @@ public abstract class PostFieldResource<T extends DbEntityField> extends PostEnt
         DbEntity theEntity = repo.getById(DbEntity.class, getAttribute(DesignerApplication.ENTITY_ID));
         return app.getTreeRepresentation(theEntity.getDbApplication());
     }
-    
+
     @Override
     public List<Tab> getTabs() {
         int i = 1;

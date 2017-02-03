@@ -1,6 +1,7 @@
 package io.skysail.server.app.designer.fields.resources;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import io.skysail.api.links.Link;
 import io.skysail.api.responses.SkysailResponse;
@@ -36,9 +37,9 @@ public class FieldResource extends EntityServerResource<DbEntityField> {
         DbEntity dbEntity = app.getEntity(getAttribute(DesignerApplication.ENTITY_ID));
         Optional<DbEntityField> optionalField = dbEntity.getFields().stream().filter(f -> f.getId().equals("#"+getAttribute(DesignerApplication.FIELD_ID))).findFirst();
         if (optionalField.isPresent()) {
-            Repository entityRepository = app.getRepository(DbEntity.class);
+            Repository entityRepository = app.getRepository();
             dbEntity.getFields().stream().filter(f -> f.getId().equals("#"+getAttribute(DesignerApplication.FIELD_ID))).findFirst().ifPresent(f -> {
-                entityRepository.delete(f);
+               // entityRepository.delete(f);
             });
             return new SkysailResponse<>();
         } else {
@@ -52,7 +53,7 @@ public class FieldResource extends EntityServerResource<DbEntityField> {
          links.stream().forEach(l -> l.setUri(l.getUri() + "?classHint={entity.type}"));
          return links;
     }
-    
+
     @Override
     public String redirectTo() {
         return super.redirectTo(ApplicationsResource.class);

@@ -1,11 +1,14 @@
 package io.skysail.server.app.designer.codegen;
 
-import io.skysail.domain.Identifiable;
-import lombok.Data;
 
-@Data
-public class Empty implements Identifiable {
-    
+import io.skysail.domain.Entity;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Empty implements Entity {
+
     private String id;
 
 }

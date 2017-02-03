@@ -17,6 +17,7 @@ Include-Resource: resources, templates=src;recursive:=true;filter:=*.st|*.stg
     ${jetty},\
     lombok;version=${lombok.version},\
     skysail.server;version=${skysail.server.version},\
+    skysail.server.converter;version=${skysail.server.converter.version},\
     skysail.server.queryfilter;version=${skysail.server.queryfilter.version},\
     skysail.server.db;version=${skysail.server.db.version},\
     skysail.server.testsupport;version=${skysail.server.testsupport.version},\

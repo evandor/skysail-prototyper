@@ -8,7 +8,7 @@ import io.skysail.server.app.designer.DesignerApplication;
 import io.skysail.server.app.designer.application.ApplicationStatus;
 import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.repo.DesignerRepository;
-import io.skysail.server.queryfilter.Filter;
+import io.skysail.server.queryfilter.filtering.Filter;
 import io.skysail.server.queryfilter.pagination.Pagination;
 import io.skysail.server.restlet.resources.ListServerResource;
 
@@ -25,7 +25,7 @@ public class ApplicationsResource extends ListServerResource<DbApplication> {
     @Override
     protected void doInit() {
         app = (DesignerApplication) getApplication();
-        repository = (DesignerRepository) app.getRepository(DbApplication.class);
+        repository = app.getRepository();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ApplicationsResource extends ListServerResource<DbApplication> {
 //        List<DbApplication> apps = app.getRepository().findAll(DbApplication.class);
 
         Filter filter = new Filter(getRequest());
-        Pagination pagination = new Pagination(getRequest(), getResponse(), repository.count(filter));
+        Pagination pagination = new Pagination(getRequest(), getResponse());
         List<DbApplication> apps = repository.find(filter, pagination);
 
 

@@ -32,7 +32,7 @@ public class EntitiesResource extends ListServerResource<DbEntity> {
 		app = (DesignerApplication) getApplication();
 		id = getAttribute("id");
 		if (id != null) {
-			dbApplication = (DbApplication) app.getRepository(DbApplication.class).findOne(id);
+			dbApplication = app.getRepository().findOne(id);
 			// .getById(DbApplication.class, id);
 			setUrlSubsitution("applications", id, dbApplication != null ? dbApplication.getName() : "unknown");
 		}

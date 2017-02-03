@@ -1,9 +1,9 @@
 package io.skysail.server.app.designer.fields.resources;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import io.skysail.server.app.designer.DesignerApplication;
-import io.skysail.server.app.designer.application.DbApplication;
 import io.skysail.server.app.designer.entities.DbEntity;
 import io.skysail.server.app.designer.fields.DbEntityField;
 import io.skysail.server.app.designer.repo.DesignerRepository;
@@ -24,7 +24,7 @@ public abstract class PutFieldResource<T extends DbEntityField> extends PutEntit
         entityId = getAttribute(DesignerApplication.ENTITY_ID);
         fieldId = getAttribute(DesignerApplication.FIELD_ID);
         app = (DesignerApplication) getApplication();
-        repo = (DesignerRepository) app.getRepository(DbApplication.class);
+        repo = app.getRepository();
     }
 
     @Override
@@ -47,7 +47,7 @@ public abstract class PutFieldResource<T extends DbEntityField> extends PutEntit
         DbEntity theEntity = repo.getById(DbEntity.class, getAttribute(DesignerApplication.ENTITY_ID));
         return app.getTreeRepresentation(theEntity.getDbApplication());
     }
-    
+
     @Override
     public List<Tab> getTabs() {
         int i = 1;

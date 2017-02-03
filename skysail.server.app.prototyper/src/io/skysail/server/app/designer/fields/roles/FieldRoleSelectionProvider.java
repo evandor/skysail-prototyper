@@ -1,6 +1,8 @@
 package io.skysail.server.app.designer.fields.roles;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.restlet.resource.Resource;
@@ -19,7 +21,7 @@ public class FieldRoleSelectionProvider implements SelectionProvider {
 
     @Override
     public Map<String, String> getSelections() {
-        Map<String, String> result = new HashMap<>(); 
+        Map<String, String> result = new HashMap<>();
         List<FieldRole> roles =  ((PostFieldResource<?>)resource).getFieldRoles();
         result.put("NONE", "");
         List<FieldRole> types = roles.stream().collect(Collectors.toList());
@@ -31,7 +33,6 @@ public class FieldRoleSelectionProvider implements SelectionProvider {
     public void setConfiguration(Object osgiServicesProvider) {
     }
 
-    @Override
     public void setResource(Resource resource) {
         this.resource = resource;
     }

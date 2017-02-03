@@ -6,7 +6,6 @@ import java.util.List;
 import io.skysail.api.links.Link;
 import io.skysail.server.ResourceContextId;
 import io.skysail.server.db.DbClassName;
-import io.skysail.server.queryfilter.Filter;
 import io.skysail.server.queryfilter.pagination.Pagination;
 import io.skysail.server.restlet.resources.ListServerResource;
 import $application.packageName$.*;
@@ -29,7 +28,7 @@ public class $entity.simpleName$s$relation.targetEntityModel.simpleName$sResourc
     @Override
     protected void doInit() {
         app = ($application.name$Application) getApplication();
-        oeRepo = ($entity.simpleName$Repository) app.getRepository($entity.simpleName$.class);
+        oeRepo = ($entity.simpleName$Repository) app.getRepository();
     }
 
     @Override

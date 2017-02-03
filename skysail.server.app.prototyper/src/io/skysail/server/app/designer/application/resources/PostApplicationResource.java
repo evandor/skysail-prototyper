@@ -43,7 +43,7 @@ public class PostApplicationResource extends PostEntityServerResource<DbApplicat
 //        String id = app.getRepository(DbApplication.class).save(entity, app.getApplicationModel()).toString();
 //        entity.setId(id);
 
-        OrientVertex save = (OrientVertex) app.getRepository(DbApplication.class).save(entity, app.getApplicationModel());
+        OrientVertex save = app.getRepository().save(entity, app.getApplicationModel());
 //        String id = DesignerRepository.add(entity, app.getApplicationModel()).getId().toString();
         entity.setId(save.getId().toString());
     }

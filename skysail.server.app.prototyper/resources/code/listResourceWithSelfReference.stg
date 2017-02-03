@@ -2,7 +2,6 @@ listResourceWithSelfReference(application, entity, listLinks) ::= <<
 package $entity.packageName$.resources;
 
 import io.skysail.server.db.DbClassName;
-import io.skysail.server.queryfilter.Filter;
 import io.skysail.server.queryfilter.pagination.Pagination;
 import io.skysail.server.restlet.resources.ListServerResource;
 import io.skysail.api.links.Link;
@@ -34,7 +33,7 @@ public class $entity.simpleName$sResourceGen extends ListServerResource<$entity.
     @Override
     protected void doInit() {
         app = ($application.name$Application) getApplication();
-        repository = ($entity.simpleName$Repository) app.getRepository($entity.id$.class);
+        repository = ($entity.simpleName$Repository) app.getRepository();
     }
     
     @Override

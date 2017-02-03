@@ -19,11 +19,10 @@ serverbundles-minimal-1.0.0: \
     com.googlecode.concurrentlinkedhashmap.lru;version='[1.4.0,1.4.1)',\
     ${orientdb},\
     ${jetty},\
-    org.yaml.snakeyaml;version=1.15.0,\
+    org.yaml.snakeyaml;version=1.17,\
     de.twentyeleven.skysail.org.json-osgi;version=latest,\
     ${restlet},\
     com.google.guava;version='[16.0,16.1)',\
-    org.jboss.logging.jboss-logging;version='[3.1.4,3.1.5)',\
     org.hibernate.validator;version=${org.hibernate.validator.version},\
     ${logging},\
     com.sun.el;version='[2.2.0,2.2.1)',\
@@ -33,9 +32,8 @@ serverbundles-minimal-1.0.0: \
     skysail.server.converter;version=${skysail.server.converter.version},\
     skysail.server.db;version=${skysail.server.db.version},\
     skysail.server.http;version=${skysail.server.http.version},\
+    skysail.server.polymer;version=${skysail.server.polymer.version},\
     skysail.server.queryfilter;version=${skysail.server.queryfilter.version},\
-    skysail.server.static;version=${skysail.server.static.version},\
     skysail.server.text.markdown;version=${skysail.server.text.markdown.version},\
     skysail.server.text.store.bundleresource;version=${skysail.server.text.store.bundleresource.version},\
-    skysail.server.text.store.git;version=${skysail.server.text.store.git.version},\
     ${skysail.server.um}

@@ -5,12 +5,12 @@ import java.util.List;
 
 import io.skysail.server.app.designer.codegen.CompiledCode;
 import io.skysail.server.app.designer.codegen.JavaCompiler;
+import io.skysail.server.app.designer.codegen.STGroupBundleDir;
 import io.skysail.server.app.designer.codegen.compilers.SkysailEntityCompiler;
 import io.skysail.server.app.designer.codegen.templates.TemplateProvider;
 import io.skysail.server.app.designer.model.DesignerApplicationModel;
 import io.skysail.server.app.designer.model.DesignerEntityModel;
 import io.skysail.server.app.designer.model.RouteModel;
-import io.skysail.server.stringtemplate.STGroupBundleDir;
 import lombok.Getter;
 
 public class EntitiesCreator {
